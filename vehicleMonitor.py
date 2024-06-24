@@ -16,7 +16,7 @@ class BatteryMonitor:
     avg_window = 5
     hourses = [0]*avg_window
     minuteses = [0]*avg_window
-    prev_time_index = avg_window
+    prev_time_index = avg_window - 1
 
     def __init__(self, i2c_bus):
         self.ina = INA219(i2c_bus, INA219.INA219_I2C_ADDRESS4)
