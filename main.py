@@ -49,10 +49,11 @@ while True:
 
   print('Battery info:\n\n')
   print('  %.1f V   (%.f%%)\n' % (voltage, voltage_percent))
-  print('  %.f mA  (%.f%%)\n\n' % (current, current_percent))
+  print('  %.f mA  (%.f%%)\n' % (current, current_percent))
   if h > 0:
     print(f'  {h}h {m}m  left')
   else:
     print(f'     {m}m  left')
+  print("\n\n")
 
   sleep(1)

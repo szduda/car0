@@ -34,4 +34,4 @@ class BatteryMonitor:
     def get_time_until_discharge(self, voltage_percent, current):
         h, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
         m = round(m_precent * 60)
-        return h, m
+        return round(h / 100), m
