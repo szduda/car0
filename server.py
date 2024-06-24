@@ -5,6 +5,8 @@ from asyncio import sleep
 from drive import Drive
 from vehicleMonitor import BatteryMonitor
 
+closing = False
+
 speed = 100
 drive = Drive(12, 18, 13, 19)
 
@@ -20,7 +22,7 @@ async def index(request):
 @app.route('/monitor')
 @with_sse
 async def monitor(request, sse):
-  while True:
+  while not closing:
     voltage, voltage_percent = battery_monitor.get_voltage()
     current, current_percent = battery_monitor.get_current()
     h, m = battery_monitor.get_time_until_discharge(voltage_percent, current)
@@ -37,7 +39,8 @@ async def steer(request, ws):
 
     async def ok(): await ws.send('ok')
 
-    global speed
+    global speed, closing
+
     if cmd in map(str, range(3, 10)):
       speed = (int(cmd) + 1) * 10
       await ok()
@@ -60,6 +63,7 @@ async def steer(request, ws):
         drive.stop()
         await ok()
       case 'bye':
+        closing = True
         drive.deinit()
         await ws.send('farewell')
       case _:
@@ -79,4 +83,7 @@ if __name__ == '__main__':
     print("Starting the server...")
     app.run()
   except KeyboardInterrupt:
+    print("Deinitializing vehicle control...")
     drive.deinit()
+    print("Server closed.")
+
