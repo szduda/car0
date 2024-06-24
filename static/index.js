@@ -11,9 +11,9 @@ socket.addEventListener('close', ev => {
 });
 
 const sse = new EventSource(`//${location.host}/monitor`)
-sse.onopen(() => log('>>> SSE opened'))
-sse.onmessage((e) => log(`>>> SSE message: ${e.data}`))
-sse.onerror(() => log('>>> SSE error; reconnecting'))
+sse.onopen = () => log('>>> SSE opened')
+sse.onmessage = (e) => log(`>>> SSE message: ${e.data}`)
+sse.onerror = () => log('>>> SSE error; reconnecting')
 
 document.getElementById('form').onsubmit = ev => {
   ev.preventDefault();
