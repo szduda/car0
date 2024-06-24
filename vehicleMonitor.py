@@ -13,6 +13,11 @@ class BatteryMonitor:
     MAX_VOLT = 4.2 * ACU_18650_COUNT
     MAX_mA = (1500.0 * 2) + 180 #  HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
 
+    avg_window = 5
+    hourses = [0]*avg_window
+    minuteses = [0]*avg_window
+    prev_time_index = avg_window
+
     def __init__(self, i2c_bus):
         self.ina = INA219(i2c_bus, INA219.INA219_I2C_ADDRESS4)
 
@@ -32,6 +37,15 @@ class BatteryMonitor:
         return current, current_percent
 
     def get_time_until_discharge(self, voltage_percent, current):
-        h, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
+        hx100, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
+        h = round(hx100 / 100.0)
         m = round(m_precent * 60)
-        return round(h / 100), m
+        i = self.prev_time_index % self.avg_window
+        self.hourses.insert(i, h)
+        self.minuteses.insert(i, m)
+        is_positive = lambda num: num > 0
+        hs = list(filter(is_positive, self.hourses))
+        ms =  list(filter(is_positive, self.minuteses))
+        avg_h = sum(hs) / len(hs)
+        avg_m = sum(ms) / len(ms)
+        return round(avg_h), round(avg_m)
