@@ -38,8 +38,8 @@ class BatteryMonitor:
 
     def get_time_until_discharge(self, voltage_percent, current):
         hx100, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
-        h = round(hx100 / 100.0)
-        m = round((m_precent * 60) / 10) * 10
+        h = hx100 / 100.0
+        m = m_precent * 60
         i = self.prev_time_index % self.avg_window
         self.prev_time_index = i
         self.hourses.insert(i, h)
@@ -49,4 +49,4 @@ class BatteryMonitor:
         ms =  list(filter(is_positive, self.minuteses))
         avg_h = sum(hs) / len(hs)
         avg_m = sum(ms) / len(ms)
-        return round(avg_h), round(avg_m)
+        return round(avg_h), round(avg_m / 10) * 10
