@@ -41,6 +41,7 @@ class BatteryMonitor:
         h = round(hx100 / 100.0)
         m = round(m_precent * 60)
         i = self.prev_time_index % self.avg_window
+        self.prev_time_index = i
         self.hourses.insert(i, h)
         self.minuteses.insert(i, m)
         is_positive = lambda num: num > 0
