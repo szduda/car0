@@ -51,7 +51,7 @@ class BatteryMonitor:
         hs = list(filter(is_positive, self.hourses))
         ms = list(filter(is_positive, self.minuteses))
 
-        avg_h = sum(hs) / len(hs)
-        avg_m = sum(ms) / len(ms)
+        avg_h = sum(hs) / max(1, len(hs))
+        avg_m = sum(ms) / max(1, len(ms))
 
         return round(avg_h), round(avg_m / 10) * 10
