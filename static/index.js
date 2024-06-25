@@ -24,7 +24,7 @@ socket.addEventListener('close', ev => {
 const sse = new EventSource(`//${location.host}/monitor`)
 sse.onopen = () => log('> SSE opened')
 sse.onmessage = (e) => {
-  log(`>>> SSE message: ${e.data}`)
+  log(`> SSE message: ${e.data}`)
   const data = JSON.parse(e.data)
   document.getElementById('voltage').innerHTML = `${data.v.toFixed(2)} V  (${data.vp}%)`
   document.getElementById('current').innerHTML = `${data.c.toFixed(0)} mA  (${data.cp}%)`
@@ -36,7 +36,7 @@ sse.onerror = () => log('> SSE error; reconnecting')
 document.getElementById('form').onsubmit = ev => {
   ev.preventDefault();
   const input = document.getElementById('cmdInput');
-  log('>>> ' + input.value, 'red');
+  log('> ' + input.value, 'red');
   socket.send(input.value);
   input.value = '';
 };
