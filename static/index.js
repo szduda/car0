@@ -15,9 +15,10 @@ sse.onopen = () => log('>>> SSE opened')
 sse.onmessage = (e) => {
   log(`>>> SSE message: ${e.data}`)
   const data = JSON.parse(e.data)
-  document.getElementById('voltage').innerHTML = `${data.voltage} V`
-  document.getElementById('current').innerHTML = `${data.current} mA`
-  document.getElementById('batteryTime').innerHTML = `${data.h} h ${data.m} m`
+  document.getElementById('voltage').innerHTML = `${data.v} V  (${data.vp}%)`
+  document.getElementById('current').innerHTML = `${data.c} mA  (${data.cp}%)`
+  document.getElementById('batteryH').innerHTML = data.h
+  document.getElementById('batteryM').innerHTML = data.m
 }
 sse.onerror = () => log('>>> SSE error; reconnecting')
 

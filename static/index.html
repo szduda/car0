@@ -1,35 +1,40 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Microdot WebSocket Demo</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/style.css"/>
-  </head>
-  <body>
-    <h1>CAR<span style="color: #00DDAA">0</span> Control</h1>
+<head>
+  <title>Microdot WebSocket Demo</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="static/style.css"/>
+</head>
+<body>
+<h1>CAR<span style="color: #00DDAA">0</span> Control</h1>
 
-    <div id="vehicleMonitor">
-      <div class="labeled">
-        <div>Voltage</div>
-        <div id="voltage">0 V</div>
-      </div>
-      <div class="labeled">
-        <div>Current</div>
-        <div id="current">0 mA</div>
-      </div>
-      <div class="labeled">
-        <div>Battery Time</div>
-        <div id="batteryTime">0 h 00 m</div>
-      </div>
+<div id="vehicleMonitor">
+  <div class="labeled">
+    <div>Voltage</div>
+    <div id="voltage">0 V</div>
+  </div>
+  <div class="labeled">
+    <div>Current</div>
+    <div id="current">0 mA</div>
+  </div>
+  <div class="labeled">
+    <div>Battery Time</div>
+    <div>
+      <span id="batteryH">0</span>
+      <span style="opacity: 0.5">h</span>
+      <span id="batteryM">00</span>
+      <span style="opacity: 0.5">m</span>
     </div>
+  </div>
+</div>
 
-    <form id="form">
-      <label for="cmdInput">Command:&nbsp;</label>
-      <input type="text" id="cmdInput" autofocus />
-    </form>
+<form id="form">
+  <label for="cmdInput">Command:&nbsp;</label>
+  <input type="text" id="cmdInput" autofocus/>
+</form>
 
-    <div id="debugOut"></div>
+<div id="debugOut"></div>
 
-    <script type="text/javascript" src="static/index.js"></script>
-  </body>
+<script type="text/javascript" src="static/index.js"></script>
+</body>
 </html>
