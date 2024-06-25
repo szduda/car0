@@ -80,11 +80,13 @@ const steerKeyMap = {
   ' ': 'stp',
 }
 
+const getKeyId = (key) => key === ' ' ? 'space' : key
+
 document.onkeydown = (e) => {
   if (e.key in speedKeyMap) {
     const speed = speedKeyMap[e.key]
-    speedKeyMap.ArrowUp = min(speed + 1, 9)
-    speedKeyMap.ArrowDown = max(speed - 1, 3)
+    speedKeyMap.ArrowUp = Math.min(speed + 1, 9)
+    speedKeyMap.ArrowDown = Math.max(speed - 1, 3)
     socket.send(String(speed))
     log(`New speed [${speed}]`, '#fb0')
   }
@@ -95,16 +97,16 @@ document.onkeydown = (e) => {
     log(`New command [${cmd}]`, '#fb0')
   }
 
-  document.getElementById(e.key)?.setAttribute('data-pressed', true)
+  document.getElementById(getKeyId(e.key))?.setAttribute('data-pressed', true)
 }
 
 document.onkeyup = (e) => {
-  const el = document.getElementById(e.key)
+  const el = document.getElementById(getKeyId(e.key))
   if(!el) {
     return
   }
 
   socket.send('stp')
   log('Sending [stp] due to key release', '#fb0')
-  el.setAttribute('data-pressed', false)``
+  el.removeAttribute('data-pressed')
 }
