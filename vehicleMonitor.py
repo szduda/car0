@@ -30,12 +30,12 @@ class BatteryMonitor:
     def get_voltage(self):
         voltage = self.ina.get_bus_voltage_V()
         voltage_percent = 100 * (voltage - self.MIN_VOLT) / (self.MAX_VOLT - self.MIN_VOLT)
-        return voltage, voltage_percent
+        return voltage, round(voltage_percent)
 
     def get_current(self):
         current = self.ina.get_current_mA()
         current_percent = 100 * current / self.MAX_mA
-        return current, current_percent
+        return current, round(current_percent)
 
     def get_time_until_discharge(self, voltage_percent, current):
         hx100, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
