@@ -52,14 +52,6 @@ sse.onerror = () => {
 
 
 // User interactions
-document.getElementById('form').onsubmit = ev => {
-  ev.preventDefault()
-  const input = document.getElementById('cmdInput')
-  log(input.value, '#fb0')
-  socket.send(input.value)
-  input.value = ''
-}
-
 const speedKeyMap = {
   ArrowUp: 6,
   ArrowDown: 4,
@@ -73,6 +65,7 @@ const speedKeyMap = {
 }
 
 const steerKeyMap = {
+  Escape: 'bye',
   w: 'fwd',
   s: 'rev',
   a: 'rtl',
