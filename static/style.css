@@ -6,7 +6,7 @@ html, body {
   font-size: 16px;
   margin: 0;
   padding: 0;
-  font-family: Roboto, Verdana;
+  font-family: monospace;
 }
 
 h1 {
@@ -21,9 +21,9 @@ h1 {
 }
 
 .labeled > div:first-child {
-  color: #d4d4d4;
+  color: #ccc;
   letter-spacing: 0.02rem;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 .labeled > div:last-child {
@@ -40,6 +40,10 @@ h1 {
   align-items: center;
 }
 
+#vehicleMonitor .labeled > div:first-child {
+  color: #afd;
+}
+
 #form {
   padding: 4rem 2rem;
   display: flex;
@@ -48,10 +52,10 @@ h1 {
 }
 
 #debugOut {
-  color: #e5e5e5;
-  width: 100%;
+  color: #d4d4d4;
   background: #888;
   padding: 2rem;
   height: 300px;
   overflow-y: scroll;
+  font-family: monospace;
 }

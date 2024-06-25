@@ -27,7 +27,14 @@ async def monitor(request, sse):
     current, current_percent = battery_monitor.get_current()
     h, m = battery_monitor.get_time_until_discharge(voltage_percent, current)
     await sleep(1)
-    await sse.send({voltage, voltage_percent, current, current_percent, h, m})
+    await sse.send({
+      'v': voltage,
+      'vp': voltage_percent,
+      'c': current,
+      'cp': current_percent,
+      'h': h,
+      'm': m,
+    })
 
 
 @app.route('/steer')
@@ -37,7 +44,8 @@ async def steer(request, ws):
     cmd = await ws.receive()
     print(f'[{cmd}] command received')
 
-    async def ok(): await ws.send('ok')
+    async def ok():
+      await ws.send('ok')
 
     global speed, closing
 
@@ -72,10 +80,10 @@ async def steer(request, ws):
 
 @app.route("/static/<path:path>")
 def static(request, path):
-    if ".." in path:
-        # directory traversal is not allowed
-        return "Not found", 404
-    return send_file("static/" + path)
+  if ".." in path:
+    # directory traversal is not allowed
+    return "Not found", 404
+  return send_file("static/" + path)
 
 
 if __name__ == '__main__':
@@ -86,4 +94,3 @@ if __name__ == '__main__':
     print("Deinitializing vehicle control...")
     drive.deinit()
     print("Server closed.")
-
