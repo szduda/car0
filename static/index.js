@@ -1,7 +1,7 @@
 const log = (text, color) => {
   const debugOut = document.getElementById('debugOut');
   debugOut.innerHTML += `<span style="color: ${color}">${text}</span><br/>`;
-  const lines = debugOut.getClientRects().length / 2;
+  const lines = debugOut.children.length / 2;
   if (lines > 10) {
     debugOut.removeChild(debugOut.children[0])
     debugOut.removeChild(debugOut.children[1])
