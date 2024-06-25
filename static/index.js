@@ -1,7 +1,7 @@
 const log = (text, color) => {
   const timestamp = new Date().toISOString().substr(11,8)
   const debugOut = document.getElementById('debugOut')
-  debugOut.innerHTML += `<span><span style="color: ${color}">${timestamp: }</span><span style="color: ${color}">${text}</span><br/></span>`
+  debugOut.innerHTML += `<span><span style="color: ${color}">${timestamp}:&nbsp;</span><span style="color: ${color}">${text}</span><br/></span>`
 
   if (debugOut.children.length > 15) {
     debugOut.removeChild(debugOut.children[0])
