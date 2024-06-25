@@ -84,6 +84,10 @@ const steerKeyMap = {
 const getKeyId = (key) => key === ' ' ? 'space' : key
 
 document.onkeydown = (e) => {
+  if (e.repeat) {
+    return
+  }
+
   if (e.key in speedKeyMap) {
     const speed = speedKeyMap[e.key]
     speedKeyMap.ArrowUp = Math.min(speed + 1, 9)
@@ -103,7 +107,7 @@ document.onkeydown = (e) => {
 
 document.onkeyup = (e) => {
   const el = document.getElementById(getKeyId(e.key))
-  if(!el) {
+  if (!el) {
     return
   }
 
