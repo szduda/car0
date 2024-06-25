@@ -4,6 +4,14 @@ html, body {
   height: 100dvh;
   font-weight: 500;
   font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Verdana;
+}
+
+h1 {
+  letter-spacing: 0.05rem;
+  padding: 0 2rem;
 }
 
 .labeled {
@@ -12,24 +20,34 @@ html, body {
   gap: 0.5rem;
 }
 
-labeled > div:first-child {
+.labeled > div:first-child {
   color: #d4d4d4;
   letter-spacing: 0.02rem;
+  text-transform: capitalize;
 }
 
-labeled > div:last-child {
+.labeled > div:last-child {
   font-weight: 700;
   font-size: 1.5rem;
 }
 
-.vehicleMonitor {
+#vehicleMonitor {
   background: #0f0f0f;
-  padding: 2rem 3rem;
+  padding: 3rem 2rem;
   display: flex;
   gap: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 
-.debugOut {
+#form {
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#debugOut {
   color: #e5e5e5;
   width: 100%;
   background: #888;
