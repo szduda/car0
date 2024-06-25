@@ -1,6 +1,7 @@
 from time import sleep
 from DFRobot_INA219 import INA219
 
+
 class BatteryMonitor:
 
     ina219_reading_mA = 1000
@@ -11,7 +12,7 @@ class BatteryMonitor:
 
     MIN_VOLT = 3.0 * ACU_18650_COUNT  # technically min V of an 18650 accumulator is ~2.7V, but the motor driver will cause a voltage drop when running
     MAX_VOLT = 4.2 * ACU_18650_COUNT
-    MAX_mA = (1500.0 * 2) + 180 #  HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
+    MAX_mA = (1500.0 * 2) + 180       # HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
 
     avg_window = 5
     hourses = [0]*avg_window
@@ -40,13 +41,17 @@ class BatteryMonitor:
         hx100, m_precent = divmod(self.ACU_18650_mAH * voltage_percent / current, 1)
         h = hx100 / 100.0
         m = m_precent * 60
+
         i = self.prev_time_index % self.avg_window
         self.prev_time_index = i
         self.hourses.insert(i, h)
         self.minuteses.insert(i, m)
-        is_positive = lambda num: num > 0
+
+        def is_positive(num): return num > 0
         hs = list(filter(is_positive, self.hourses))
-        ms =  list(filter(is_positive, self.minuteses))
+        ms = list(filter(is_positive, self.minuteses))
+
         avg_h = sum(hs) / len(hs)
         avg_m = sum(ms) / len(ms)
+
         return round(avg_h), round(avg_m / 10) * 10

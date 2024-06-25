@@ -6,8 +6,9 @@ from drive import Drive
 from keyboardSteering import KeyboardThread
 from vehicleMonitor import BatteryMonitor
 
-speed = 100 # if speed is set to less than 40 the motors might not work well
-drive = Drive(12,18,13,19)
+speed = 100  # if speed is set to less than 40 the motors might not work well
+drive = Drive(12, 18, 13, 19)
+
 
 def press(key):
   print(f'[{key}] pressed')

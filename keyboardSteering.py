@@ -1,6 +1,7 @@
 from sshkeyboard import listen_keyboard
 from threading import Thread
 
+
 class KeyboardThread(Thread):
 
   def __init__(self, on_press, on_release) :

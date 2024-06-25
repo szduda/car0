@@ -12,7 +12,11 @@ socket.addEventListener('close', ev => {
 
 const sse = new EventSource(`//${location.host}/monitor`)
 sse.onopen = () => log('>>> SSE opened')
-sse.onmessage = (e) => log(`>>> SSE message: ${e.data}`)
+sse.onmessage = (e) => {
+  log(`>>> SSE message: ${e.data}`)
+  const data = JSON.parse(e.data)
+  document.getElementById('voltage').innerHTML = data.voltage
+}
 sse.onerror = () => log('>>> SSE error; reconnecting')
 
 document.getElementById('form').onsubmit = ev => {

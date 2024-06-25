@@ -1,0 +1,39 @@
+html, body {
+  background: #444;
+  color: #f1f1f1;
+  height: 100dvh;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.labeled {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+labeled > div:first-child {
+  color: #d4d4d4;
+  letter-spacing: 0.02rem;
+}
+
+labeled > div:last-child {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.vehicleMonitor {
+  background: #0f0f0f;
+  padding: 2rem 3rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.debugOut {
+  color: #e5e5e5;
+  width: 100%;
+  background: #888;
+  padding: 2rem;
+  height: 300px;
+  overflow-y: scroll;
+}

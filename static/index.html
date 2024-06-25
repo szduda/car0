@@ -3,17 +3,26 @@
   <head>
     <title>Microdot WebSocket Demo</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/style.css"/>
   </head>
   <body>
-    <h1>Microdot WebSocket Demo</h1>
-    <div id="debugOut"></div>
+    <h1>CAR<span style="color: #00DDAA">0</span> Control</h1>
 
-    <hr/>
+    <div class="vehicleMonitor">
+      <div class="labeled">
+        <div>Voltage</div>
+        <div id="voltage"></div>
+      </div>
+    </div>
 
     <form id="form">
       <label for="cmdInput">Command: </label>
       <input type="text" id="cmdInput" autofocus />
     </form>
+
+    <hr/>
+
+    <div id="debugOut"></div>
 
     <script type="text/javascript" src="static/index.js"></script>
   </body>

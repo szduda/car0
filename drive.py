@@ -1,5 +1,6 @@
 import RPi.GPIO as io
 
+
 class Drive:
 
   PWM_FREQ = 500
@@ -28,7 +29,6 @@ class Drive:
     io.output(self.in3_pin, 1)
     self.pwm1.ChangeDutyCycle(100 - duty)
     self.pwm2.ChangeDutyCycle(100 - duty)
-
 
   def rev(self, duty=100):
     io.output(self.in1_pin, 0)
