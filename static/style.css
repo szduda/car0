@@ -15,13 +15,13 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 4rem;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0;
 }
 
 h1 {
   letter-spacing: 0.05rem;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0.25rem;
 }
 
 .labeled {
@@ -51,7 +51,7 @@ h1 {
 }
 
 #vehicleMonitor .labeled > div:first-child {
-  color: #afd;
+  color: #afdd;
 }
 
 .batteryTime {
@@ -78,4 +78,22 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.keyboard div[id] {
+  padding: 0.25rem;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  background: #777;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
 }

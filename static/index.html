@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-  <title>Microdot WebSocket Demo</title>
+  <title>CAR0 Controller</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="static/style.css"/>
 </head>
 <body>
 <header>
-  <h1>CAR<span style="color: #00DDAA">0</span> Control</h1>
+  <h1>CAR<span style="color: #00DDAA">0</span> Controller</h1>
   <img src="static/polonez.png" alt="Polonez Caro" height="60" width="185"/>
 </header>
 
@@ -35,6 +35,15 @@
   <label for="cmdInput">Command:&nbsp;</label>
   <input type="text" id="cmdInput" autofocus/>
 </form>
+
+<div class="keyboard">
+  <div id="w">W</div>
+  <div style="display: flex; gap: 1rem;">
+    <div id="a">A</div>
+    <div id="s">S</div>
+    <div id="d">D</div>
+  </div>
+</div>
 
 <div id="debugOut"></div>
 
