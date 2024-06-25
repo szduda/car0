@@ -1,5 +1,11 @@
 const log = (text, color) => {
-  document.getElementById('debugOut').innerHTML += `<span style="color: ${color}">${text}</span><br/>`;
+  const debugOut = document.getElementById('debugOut');
+  debugOut.innerHTML += `<span style="color: ${color}">${text}</span><br/>`;
+  const lines = debugOut.getClientRects().length / 2;
+  if (lines > 10) {
+    debugOut.removeChild(debugOut.children[0])
+    debugOut.removeChild(debugOut.children[1])
+  }
 };
 
 const socket = new WebSocket('ws://' + location.host + '/steer');
@@ -15,8 +21,8 @@ sse.onopen = () => log('>>> SSE opened')
 sse.onmessage = (e) => {
   log(`>>> SSE message: ${e.data}`)
   const data = JSON.parse(e.data)
-  document.getElementById('voltage').innerHTML = `${data.v} V  (${data.vp}%)`
-  document.getElementById('current').innerHTML = `${data.c} mA  (${data.cp}%)`
+  document.getElementById('voltage').innerHTML = `${data.v.toFixed(2)} V  (${data.vp}%)`
+  document.getElementById('current').innerHTML = `${data.c.toFixed(0)} mA  (${data.cp}%)`
   document.getElementById('batteryH').innerHTML = data.h
   document.getElementById('batteryM').innerHTML = data.m
 }

@@ -44,6 +44,11 @@ h1 {
   color: #afd;
 }
 
+.batteryTime {
+  display: flex;
+  gap: 0.5rem;
+}
+
 #form {
   padding: 4rem 2rem;
   display: flex;
@@ -58,4 +63,5 @@ h1 {
   height: 300px;
   overflow-y: scroll;
   font-family: monospace;
+  line-height: 1;
 }
