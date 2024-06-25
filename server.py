@@ -26,7 +26,7 @@ async def monitor(request, sse):
     voltage, voltage_percent = battery_monitor.get_voltage()
     current, current_percent = battery_monitor.get_current()
     h, m = battery_monitor.get_time_until_discharge(voltage_percent, current)
-    await sleep(1)
+    await sleep(2)
     await sse.send({
       'v': voltage,
       'vp': voltage_percent,
