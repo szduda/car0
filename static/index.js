@@ -24,6 +24,7 @@ const sseMaxReconnections = 5
 let sseReconnections = 0
 
 sse.onopen = (ev) => {
+  console.log(ev)
   if (ev.readyState === 1) {
     log('SSE opened', '#4f2')
   }
