@@ -9,14 +9,20 @@ const log = (text, color) => {
 
 const socket = new WebSocket('ws://' + location.host + '/steer');
 socket.addEventListener('message', ev => {
-  log('<<< ' + ev.data, 'blue');
+  log('> ' + ev.data, 'blue');
+});
+socket.addEventListener('open', ev => {
+  log('> WS open');
+});
+socket.addEventListener('error', ev => {
+  log('> WS error');
 });
 socket.addEventListener('close', ev => {
-  log('<<< WS closed');
+  log('> WS closed');
 });
 
 const sse = new EventSource(`//${location.host}/monitor`)
-sse.onopen = () => log('>>> SSE opened')
+sse.onopen = () => log('> SSE opened')
 sse.onmessage = (e) => {
   log(`>>> SSE message: ${e.data}`)
   const data = JSON.parse(e.data)
@@ -25,7 +31,7 @@ sse.onmessage = (e) => {
   document.getElementById('batteryH').innerHTML = data.h
   document.getElementById('batteryM').innerHTML = data.m
 }
-sse.onerror = () => log('>>> SSE error; reconnecting')
+sse.onerror = () => log('> SSE error; reconnecting')
 
 document.getElementById('form').onsubmit = ev => {
   ev.preventDefault();
