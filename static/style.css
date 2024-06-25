@@ -81,13 +81,16 @@ h1 {
 }
 
 .keyboard {
+  padding: 2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .keyboard div[id] {
   padding: 0.25rem;
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid #ccc;
   background: #777;
   font-size: 1.5rem;
@@ -96,4 +99,12 @@ h1 {
   align-items: center;
   width: 40px;
   height: 40px;
+}
+
+.keyboard #space {
+  width: 300px;
+}
+
+.keyboard div[id][data-pressed] {
+  background: #afd8;
 }

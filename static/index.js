@@ -14,7 +14,7 @@ socket.addEventListener('open', () => log('WS opened'))
 socket.addEventListener('error', () => log('WS error'))
 socket.addEventListener('close', () => log('WS closed'))
 
-cosnt sseMaxReconnections = 5
+const sseMaxReconnections = 5
 let sseReconnections = 0
 const sse = new EventSource(`//${location.host}/monitor`)
 sse.onopen = () => log('SSE opened')
