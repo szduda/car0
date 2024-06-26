@@ -42,14 +42,13 @@ async def monitor(request, sse):
 @app.route('/steer')
 @with_websocket
 async def steer(request, ws):
+  global speed, closing
   while not closing:
     cmd = await ws.receive()
     print(f'[{cmd}] command received')
 
     async def ok():
       await ws.send('ok')
-
-    global speed, closing
 
     if cmd in map(str, range(3, 10)):
       speed = (int(cmd) + 1) * 10
