@@ -22,6 +22,7 @@ async def index(request):
 @app.route('/monitor')
 @with_sse
 async def monitor(request, sse):
+  global closing
   while not closing:
     voltage, voltage_percent = battery_monitor.get_voltage()
     current, current_percent = battery_monitor.get_current()
