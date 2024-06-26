@@ -107,3 +107,8 @@ document.onkeyup = (e) => {
   log('Sending [stp] due to key release', '#fb0')
   el.removeAttribute('data-pressed')
 }
+
+document.getElementById('debugOutToggle').onclick = () => {
+  const debugOut = document.getElementById('debugOut');
+  debugOut.classList.toggle('hidden')
+}
