@@ -36,11 +36,13 @@ async def monitor(request, sse):
       'm': m,
     })
 
+  print('SSE endpoint closed')
+
 
 @app.route('/steer')
 @with_websocket
 async def steer(request, ws):
-  while True:
+  while not closing:
     cmd = await ws.receive()
     print(f'[{cmd}] command received')
 
@@ -76,6 +78,8 @@ async def steer(request, ws):
         await ws.send('farewell')
       case _:
         await ws.send('unknown command')
+
+  print('WS endpoint closed')
 
 
 @app.route("/static/<path:path>")
