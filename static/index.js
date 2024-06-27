@@ -151,11 +151,13 @@ document.getElementById('debugOutToggle').onclick = () => {
 document.addEventListener('touchstart', function(e) {
   updateLog(e.changedTouches[0], e);
   log('Touch start');
+  log(JSON.stringify(e));
 }, false);
 
 document.addEventListener('touchmove', function(e) {
   e.preventDefault();
-  updateLog(e.targetTouches[0], e);
+  log('Touch move');
+  log(JSON.stringify(e));
 }, false);
 
 document.addEventListener('touchend', e => {
