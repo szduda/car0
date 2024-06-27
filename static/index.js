@@ -143,23 +143,25 @@ document.onkeyup = (e) => {
   }
 }
 
-document.getElementById('debugOutToggle').onclick = () => {
+x.getElementById('debugOutToggle').onclick = () => {
   const debugOut = document.getElementById('debugOut');
   debugOut.classList.toggle('hidden')
 }
 
-document.addEventListener('touchstart', function(e) {
+const x = document.getElementById('touchArea')
+
+x.addEventListener('touchstart', function(e) {
   log('Touch start');
   log(JSON.stringify(e));
 }, {passive: false});
 
-document.addEventListener('touchmove', function(e) {
+x.addEventListener('touchmove', function(e) {
   e.preventDefault();
   log('Touch move');
   log(JSON.stringify(e));
 }, {passive: false});
 
-document.addEventListener('touchend', e => {
+x.addEventListener('touchend', e => {
   e.preventDefault();
   log('Touch end');
 }, {passive: false});
