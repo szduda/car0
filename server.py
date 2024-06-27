@@ -57,7 +57,7 @@ async def steer(request, ws):
       new_speed = (int(cmd) + 1) / 10.0
       if speed != 0:
         print(f'go with speed={new_speed} angle={angle}')
-        # drive.go(speed=new_speed, angle=angle)
+        drive.go(speed=new_speed, angle=angle)
         speed = new_speed
         await ok()
       else:
@@ -71,7 +71,7 @@ async def steer(request, ws):
           new_speed = float(value_str)
           speed = new_speed
           print(f'go with speed={speed} new_speed={new_speed} angle={angle}')
-          # drive.go(speed=speed, angle=angle)
+          drive.go(speed=speed, angle=angle)
         else:
           print(f'go with speed 0? wat? ah, ok - just stop')
           drive.stop()
@@ -81,7 +81,7 @@ async def steer(request, ws):
           new_angle = float(value_str)
           angle = new_angle
           print(f'go with speed={speed} new_angle={new_angle}, angle={angle}')
-          # drive.go(speed=speed, angle=angle)
+          drive.go(speed=speed, angle=angle)
         else:
           print('can\'t touch this (angle when speed=0)')
 
@@ -90,15 +90,15 @@ async def steer(request, ws):
     match cmd:
       case 'rtl':
         print(f'rotate left')
-        # drive.rotate('left')
+        drive.rotate('left')
         await ok()
       case 'rtr':
         print(f'rotate right')
-        # drive.rotate('right')
+        drive.rotate('right')
         await ok()
       case 'stp':
         print('drive stop')
-        # drive.stop()
+        drive.stop()
         speed = 0
         await ok()
       case 'bye':
