@@ -149,7 +149,6 @@ document.getElementById('debugOutToggle').onclick = () => {
 }
 
 document.addEventListener('touchstart', function(e) {
-  updateLog(e.changedTouches[0], e);
   log('Touch start');
   log(JSON.stringify(e));
 }, false);
