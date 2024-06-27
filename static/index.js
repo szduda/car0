@@ -102,7 +102,7 @@ document.onkeydown = (e) => {
   if (e.key in accKeys) {
     const fwd = e.key === 'w'
     if(speed === 0) {
-      speed = 0.9
+      speed = 1.0
     }
     const newSpeed = fwd ? speed : -speed
     socket.send(`speed:${newSpeed}`)
@@ -147,3 +147,18 @@ document.getElementById('debugOutToggle').onclick = () => {
   const debugOut = document.getElementById('debugOut');
   debugOut.classList.toggle('hidden')
 }
+
+document.addEventListener('touchstart', function(e) {
+  updateLog(e.changedTouches[0], e);
+  log('Touch start');
+}, false);
+
+document.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+  updateLog(e.targetTouches[0], e);
+}, false);
+
+document.addEventListener('touchend', e => {
+  e.preventDefault();
+  log('Touch end');
+}, false);
