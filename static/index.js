@@ -111,7 +111,7 @@ document.onkeydown = (e) => {
 
     if (e.key in turnKeys) {
     const left = e.key === 'a'
-    const newAngle = left ? -0.9 : 0.9
+    const newAngle = left ? -0.8 : 0.8
     socket.send(`angle:${newAngle}`)
     log(`Turn ${left ? 'left' : 'right'} with speed: ${newAngle}`, '#fb0')
   }
@@ -120,15 +120,17 @@ document.onkeydown = (e) => {
 }
 
 document.onkeyup = (e) => {
-  const el = document.getElementById(getKeyId(e.key))
-  if (!el) {
-    return
-  }
-
-  if(e.key in accKeys || e.key in rotateKeys) {
+  if(e.key in accKeys) {
     socket.send('stp')
     speed = 0
     log('Stop', '#fb0')
+  }
+
+  if( e.key in rotateKeys) {
+      socket.send('stp')
+      speed = 0
+      angle = 0
+      log('Stop', '#fb0')
   }
 
   if(e.key in turnKeys) {
@@ -137,7 +139,10 @@ document.onkeyup = (e) => {
     log('Go straight', '#fb0')
   }
 
-  el.removeAttribute('data-pressed')
+  const el = document.getElementById(getKeyId(e.key))
+  if (el) {
+    el.removeAttribute('data-pressed')
+  }
 }
 
 document.getElementById('debugOutToggle').onclick = () => {
