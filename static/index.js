@@ -159,7 +159,7 @@ x.addEventListener('touchstart', function(e) {
 x.addEventListener('touchmove', function(e) {
   e.preventDefault();
   log('Touch move');
-  log(`${e.changedTouches[0].pageX},${e.changedTouches[0].pageY});
+  log(`${e.changedTouches[0].pageX},${e.changedTouches[0].pageY}`);
 }, {passive: false});
 
 x.addEventListener('touchend', e => {
