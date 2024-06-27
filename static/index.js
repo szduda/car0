@@ -151,6 +151,7 @@ document.getElementById('debugOutToggle').onclick = () => {
 const x = document.getElementById('touchArea')
 
 x.addEventListener('touchstart', function(e) {
+  e.preventDefault();
   log('Touch start');
   log(JSON.stringify(e.touches[0]));
 }, {passive: false});
