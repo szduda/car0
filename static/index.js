@@ -152,13 +152,13 @@ const x = document.getElementById('touchArea')
 
 x.addEventListener('touchstart', function(e) {
   log('Touch start');
-  log(JSON.stringify(e.changedTouches[0]));
+  log(JSON.stringify(e.touches[0]));
 }, {passive: false});
 
 x.addEventListener('touchmove', function(e) {
   e.preventDefault();
   log('Touch move');
-  log(JSON.stringify(e.changedTouches[0]));
+  log(JSON.stringify(e.touches[0]));
 }, {passive: false});
 
 x.addEventListener('touchend', e => {
