@@ -66,12 +66,13 @@ const speedKeyMap = {
 
 const steerKeyMap = {
   Escape: 'bye',
-  w: 'fwd',
-  s: 'rev',
-  a: 'rtl',
-  d: 'rtr',
+  q: 'rtl',
+  e: 'rtr',
   ' ': 'stp',
 }
+
+let speed = 6
+let angle = 0
 
 const getKeyId = (key) => key === ' ' ? 'space' : key
 
@@ -81,17 +82,31 @@ document.onkeydown = (e) => {
   }
 
   if (e.key in speedKeyMap) {
-    const speed = speedKeyMap[e.key]
+    speed = speedKeyMap[e.key]
     speedKeyMap.ArrowUp = Math.min(speed + 1, 9)
     speedKeyMap.ArrowDown = Math.max(speed - 1, 3)
-    socket.send(String(speed))
+    socket.send(`speed:${speed / 10.0}`)
     log(`New speed [${speed}]`, '#fb0')
   }
 
   if (e.key in steerKeyMap) {
     const cmd = steerKeyMap[e.key]
     socket.send(cmd)
-    log(`New command [${cmd}]`, '#fb0')
+    log(`Command [${cmd}]`, '#fb0')
+  }
+
+  if (e.key in ['w', 's']) {
+    const fwd = e.key === 'w'
+    const newSpeed = fwd ? speed - speed
+    socket.send(`speed:${newSpeed / 10.0}`)
+    log(`Drive ${fwd ? 'forward' : 'backwards'} with speed: ${newSpeed}`, '#fb0')
+  }
+
+    if (e.key in ['a', 'd']) {
+    const left = e.key === 'a'
+    const newAngle = left ? -0.5 : 0.5
+    socket.send(`angle:${newAngle}`)
+    log(`Turn ${left ? 'left' : 'right'} with speed: ${newAngle}`, '#fb0')
   }
 
   document.getElementById(getKeyId(e.key))?.setAttribute('data-pressed', true)
@@ -103,8 +118,18 @@ document.onkeyup = (e) => {
     return
   }
 
-  socket.send('stp')
-  log('Sending [stp] due to key release', '#fb0')
+  if(e.key in ['w', 's', 'q', 'e']) {
+    socket.send('stp')
+    speed = 0
+    log('Stop', '#fb0')
+  }
+
+  if(e.key in ['a', 'd']) {
+    angle = 0
+    socket.send('angle:0')
+    log('Go straight', '#fb0')
+  }
+
   el.removeAttribute('data-pressed')
 }
 

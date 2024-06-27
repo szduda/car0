@@ -7,7 +7,9 @@ from vehicleMonitor import BatteryMonitor
 
 closing = False
 
-speed = 100
+speed = 60
+angle = 30
+
 drive = Drive(12, 18, 13, 19)
 
 app = Microdot()
@@ -43,38 +45,51 @@ async def monitor(request, sse):
 @app.route('/steer')
 @with_websocket
 async def steer(request, ws):
-  global speed, closing
+  global speed, closing, angle
   while not closing:
-    cmd = await ws.receive()
+    cmd = str(await ws.receive())
     print(f'[{cmd}] command received')
 
     async def ok():
       await ws.send('ok')
 
     if cmd in map(str, range(3, 10)):
-      speed = (int(cmd) + 1) * 10
+      new_speed = (int(cmd) + 1) / 10.0
+      if speed > 0:
+        drive.go(speed=new_speed, angle=angle)
+      speed = new_speed
       await ok()
       continue
 
+    if ':' in cmd:
+      param, value_str = cmd.split(':')
+      value = int(value_str) / 10.0
+      if param == 'speed':
+        speed = value
+        if speed != 0:
+          drive.go(speed=speed, angle=angle)
+        else:
+          drive.stop()
+
+      if param == 'angle':
+        angle = float(value)
+        if speed != 0:
+          drive.go(speed=speed, angle=angle)
+
     match cmd:
-      case 'fwd':
-        drive.fwd(speed)
-        await ok()
-      case 'rev':
-        drive.rev(speed)
-        await ok()
       case 'rtl':
-        drive.turn('l', speed)
+        drive.rotate('left')
         await ok()
       case 'rtr':
-        drive.turn('r', speed)
+        drive.rotate('right')
         await ok()
       case 'stp':
         drive.stop()
+        speed = 0
         await ok()
       case 'bye':
-        closing = True
         drive.deinit()
+        closing = True
         await ws.send('farewell')
       case _:
         await ws.send('unknown command')
