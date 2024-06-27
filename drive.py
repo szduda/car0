@@ -34,16 +34,16 @@ class Drive:
 
     braked_duty = self.MIN_DUTY + (100 - self.MIN_DUTY) * abs(speed) * self.performance
     directed_duty = 100 - braked_duty if speed >= 0 else braked_duty
-    lower_duty = max(self.MIN_DUTY, min(100, directed_duty * (1 - abs(angle) / 2)))
+    lower_duty = max(self.MIN_DUTY, min(100, braked_duty * (1 - abs(angle))))
     lower_directed_duty = 100 - lower_duty if speed >= 0 else lower_duty
-    higher_duty = max(self.MIN_DUTY, min(100, directed_duty * (1 + abs(angle) / 2)))
+    higher_duty = max(self.MIN_DUTY, min(100, braked_duty * (1 + abs(angle))))
     higher_directed_duty = 100 - higher_duty if speed >= 0 else higher_duty
 
     io.output(self.in1_pin, speed > 0)
     io.output(self.in3_pin, speed > 0)
 
     print(f'go motors go!    speed={speed}  angle={angle}\n'
-          f'                    dd={directed_duty} hdd={higher_directed_duty}  ldd={lower_directed_duty}')
+          f'                    bd={braked_duty} dd={directed_duty} hdd={higher_directed_duty}  ldd={lower_directed_duty}')
 
     self.pwm1.ChangeDutyCycle(higher_directed_duty if angle >= 0 else lower_directed_duty)
     self.pwm2.ChangeDutyCycle(lower_directed_duty if angle >= 0 else higher_directed_duty)
