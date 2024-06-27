@@ -87,8 +87,8 @@ document.onkeydown = (e) => {
 
   if (e.key in speedKeyMap) {
     speed = speedKeyMap[e.key]
-    speedKeyMap.ArrowUp = Math.min(speed + 0.1, 0.9)
-    speedKeyMap.ArrowDown = Math.max(speed - 0.1, 0.3)
+    speedKeyMap.ArrowUp = Math.min(speed + 0.1, 1.0)
+    speedKeyMap.ArrowDown = Math.max(speed - 0.1, 0.4)
     socket.send(`speed:${speed}`)
     log(`New speed [${speed}]`, '#fb0')
   }
@@ -102,7 +102,7 @@ document.onkeydown = (e) => {
   if (e.key in accKeys) {
     const fwd = e.key === 'w'
     if(speed === 0) {
-      speed = 0.8
+      speed = 0.9
     }
     const newSpeed = fwd ? speed : -speed
     socket.send(`speed:${newSpeed}`)
@@ -120,20 +120,19 @@ document.onkeydown = (e) => {
 }
 
 document.onkeyup = (e) => {
-  if(e.key in accKeys) {
+  if (e.key in accKeys) {
     socket.send('stp')
-    speed = 0
     log('Stop', '#fb0')
   }
 
-  if( e.key in rotateKeys) {
+  if (e.key in rotateKeys) {
       socket.send('stp')
       speed = 0
       angle = 0
       log('Stop', '#fb0')
   }
 
-  if(e.key in turnKeys) {
+  if (e.key in turnKeys) {
     angle = 0
     socket.send('angle:0')
     log('Go straight', '#fb0')

@@ -54,7 +54,7 @@ async def steer(request, ws):
       await ws.send('ok')
 
     if cmd in map(str, range(3, 10)):
-      new_speed = (int(cmd) + 1) / 10.0
+      new_speed = int(cmd)
       if speed != 0:
         print(f'go with speed={new_speed} angle={angle}')
         drive.go(speed=new_speed, angle=angle)
