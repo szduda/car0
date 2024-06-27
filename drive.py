@@ -31,9 +31,9 @@ class Drive:
     self.speed = speed
     self.turn_angle = angle
 
-    braked_spead = speed * self.brake
-    directed_duty = 100 - braked_spead if speed >= 0 else braked_spead
-    lower_speed = braked_spead * (1 - abs(angle))
+    braked_speed = speed * self.brake
+    directed_duty = 100 - braked_speed if speed >= 0 else braked_speed
+    lower_speed = braked_speed * (1 - abs(angle))
     lower_directed_duty = 100 - lower_speed if speed >= 0 else lower_speed
 
     io.output(self.in1_pin, speed > 0)
@@ -58,7 +58,7 @@ class Drive:
     io.output(self.in1_pin, not left)
     io.output(self.in3_pin, left)
     self.pwm1.ChangeDutyCycle(100 if left else 0)
-    self.pwm2.ChangeDutyCycle(100 if left else 0)
+    self.pwm2.ChangeDutyCycle(0 if left else 100)
 
   def deinit(self):
     self.stop()

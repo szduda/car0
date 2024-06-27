@@ -11,7 +11,7 @@ class BatteryMonitor:
     ACU_18650_mAH = 2600
 
     MIN_VOLT = 3.4 * ACU_18650_COUNT
-    MAX_VOLT = 4.2 * ACU_18650_COUNT
+    MAX_VOLT = 4.1 * ACU_18650_COUNT
     MAX_mA = (1500.0 * 2) + 180       # HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
 
     avg_window = 5

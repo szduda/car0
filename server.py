@@ -55,10 +55,13 @@ async def steer(request, ws):
 
     if cmd in map(str, range(3, 10)):
       new_speed = (int(cmd) + 1) / 10.0
-      if speed > 0:
-        drive.go(speed=new_speed, angle=angle)
-      speed = new_speed
-      await ok()
+      if speed != 0:
+        print(f'go with speed={new_speed} angle={angle}')
+        # drive.go(speed=new_speed, angle=angle)
+        speed = new_speed
+        await ok()
+      else:
+        print('request ignored; for now speed can be changed only while driving')
       continue
 
     if ':' in cmd:
@@ -66,31 +69,41 @@ async def steer(request, ws):
       if param == 'speed':
         speed = float(value_str)
         if speed != 0:
-          drive.go(speed=speed, angle=angle)
+          print(f'go with speed={speed} angle={angle}')
+          # drive.go(speed=speed, angle=angle)
         else:
+          print(f'go with speed 0? wat? ah, ok - just stop')
           drive.stop()
 
       if param == 'angle':
         angle = float(value_str)
         if speed != 0:
-          drive.go(speed=speed, angle=angle)
+          print(f'go with speed={speed} angle={angle}')
+          # drive.go(speed=speed, angle=angle)
+        else:
+          print('can\'t touch this (angle when speed=0)')
 
     match cmd:
       case 'rtl':
-        drive.rotate('left')
+        print(f'rotate left')
+        # drive.rotate('left')
         await ok()
       case 'rtr':
-        drive.rotate('right')
+        print(f'rotate right')
+        # drive.rotate('right')
         await ok()
       case 'stp':
-        drive.stop()
+        print('drive stop')
+        # drive.stop()
         speed = 0
         await ok()
       case 'bye':
+        print('drive deinit; closing=True')
         drive.deinit()
         closing = True
         await ws.send('farewell')
       case _:
+        print('unknown command')
         await ws.send('unknown command')
 
   print('WS endpoint closed')
