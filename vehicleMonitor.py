@@ -10,7 +10,7 @@ class BatteryMonitor:
     ACU_18650_COUNT = 2
     ACU_18650_mAH = 2600
 
-    MIN_VOLT = 3.0 * ACU_18650_COUNT  # technically min V of an 18650 accumulator is ~2.7V, but the motor driver will cause a voltage drop when running
+    MIN_VOLT = 3.4 * ACU_18650_COUNT
     MAX_VOLT = 4.2 * ACU_18650_COUNT
     MAX_mA = (1500.0 * 2) + 180       # HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
 
