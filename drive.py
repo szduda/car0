@@ -7,7 +7,7 @@ class Drive:
 
   speed = 0.0
   turn_angle = 0.0
-  brake = 1.0
+  performance = 1.0
 
   def __init__(self, p1, p2, p3, p4):
     io.setmode(io.BCM)
@@ -32,8 +32,7 @@ class Drive:
     self.speed = speed
     self.turn_angle = angle
 
-    print(f'{speed} {abs(speed)} {self.brake} {self.MIN_DUTY}')
-    braked_duty = self.MIN_DUTY + (100 - self.MIN_DUTY) * abs(speed) * self.brake
+    braked_duty = self.MIN_DUTY + (100 - self.MIN_DUTY) * abs(speed) * self.performance
     directed_duty = 100 - braked_duty if speed >= 0 else braked_duty
     lower_duty = max(self.MIN_DUTY, min(100, directed_duty * (1 - abs(angle) / 2)))
     lower_directed_duty = 100 - lower_duty if speed >= 0 else lower_duty
@@ -57,7 +56,7 @@ class Drive:
     self.pwm2.ChangeDutyCycle(0)
 
   def brake(self, on):
-    self.brake = 0.5 if on else 1.0
+    self.performance = 0.5 if on else 1.0
     self.go(speed=self.speed, angle=self.turn_angle)
 
   def rotate(self, side):
