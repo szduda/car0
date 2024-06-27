@@ -126,8 +126,7 @@ document.onkeyup = (e) => {
   }
 
   if (e.key in rotateKeys) {
-      socket.send('stp')
-      speed = 0
+      socket.send('angle:0')
       angle = 0
       log('Stop', '#fb0')
   }
