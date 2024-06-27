@@ -75,7 +75,7 @@ const accKeys = {w: true, s: true}
 const rotateKeys = {q: true, e: true}
 const turnKeys = {a: true, d: true}
 
-let speed = 0.6
+let speed = 0
 let angle = 0
 
 const getKeyId = (key) => key === ' ' ? 'space' : key
@@ -102,7 +102,7 @@ document.onkeydown = (e) => {
   if (e.key in accKeys) {
     const fwd = e.key === 'w'
     if(speed === 0) {
-      speed = 0.6
+      speed = 0.8
     }
     const newSpeed = fwd ? speed : -speed
     socket.send(`speed:${newSpeed}`)
@@ -111,7 +111,7 @@ document.onkeydown = (e) => {
 
     if (e.key in turnKeys) {
     const left = e.key === 'a'
-    const newAngle = left ? -0.5 : 0.5
+    const newAngle = left ? -0.9 : 0.9
     socket.send(`angle:${newAngle}`)
     log(`Turn ${left ? 'left' : 'right'} with speed: ${newAngle}`, '#fb0')
   }

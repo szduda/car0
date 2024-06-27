@@ -54,7 +54,7 @@ class Drive:
     self.go(speed=self.speed, angle=self.turn_angle)
 
   def rotate(self, side):
-    left = side == "l"
+    left = side == "left"
     io.output(self.in1_pin, not left)
     io.output(self.in3_pin, left)
     self.pwm1.ChangeDutyCycle(100 if left else 0)
