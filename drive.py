@@ -41,8 +41,8 @@ class Drive:
     io.output(self.in1_pin, speed > 0)
     io.output(self.in3_pin, speed > 0)
 
-    print(f'go motors go! speed={speed} angle={angle}'
-          f'hdd={higher_directed_duty}, ldd={lower_directed_duty}')
+    print(f'go motors go!    speed={speed}  angle={angle}\n'
+          f'                   hdd={higher_directed_duty}  ldd={lower_directed_duty}')
 
     self.pwm1.ChangeDutyCycle(max(0, min(100, higher_directed_duty if angle >= 0 else lower_directed_duty)))
     self.pwm2.ChangeDutyCycle(max(0, min(100, lower_directed_duty if angle >= 0 else higher_directed_duty)))
