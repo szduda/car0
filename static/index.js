@@ -111,7 +111,7 @@ document.onkeydown = (e) => {
 
     if (e.key in turnKeys) {
     const left = e.key === 'a'
-    const newAngle = left ? -0.7 : 0.7
+    const newAngle = left ? -0.8 : 0.8
     socket.send(`angle:${newAngle}`)
     log(`Turn ${left ? 'left' : 'right'} with speed: ${newAngle}`, '#fb0')
   }
