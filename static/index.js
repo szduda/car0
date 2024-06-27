@@ -71,6 +71,9 @@ const steerKeyMap = {
   ' ': 'stp',
 }
 
+const accKeys = {w: true, s: true}
+const turnKeys = {a: true, d: true}
+
 let speed = 6
 let angle = 0
 
@@ -95,14 +98,14 @@ document.onkeydown = (e) => {
     log(`Command [${cmd}]`, '#fb0')
   }
 
-  if (e.key in ['w', 's']) {
+  if (e.key in accKeys) {
     const fwd = e.key === 'w'
     const newSpeed = fwd ? speed : -speed
     socket.send(`speed:${newSpeed / 10.0}`)
     log(`Drive ${fwd ? 'forward' : 'backwards'} with speed: ${newSpeed}`, '#fb0')
   }
 
-    if (e.key in ['a', 'd']) {
+    if (e.key in turnKeys) {
     const left = e.key === 'a'
     const newAngle = left ? -0.5 : 0.5
     socket.send(`angle:${newAngle}`)
