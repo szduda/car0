@@ -32,7 +32,7 @@ class Drive:
     self.speed = speed
     self.turn_angle = angle
 
-    braked_duty = (self.MIN_DUTY + 60 * float(abs(speed))) * self.brake
+    braked_duty = (self.MIN_DUTY + 60.0 * abs(speed)) * self.brake
     directed_duty = 100 - braked_duty if speed >= 0 else braked_duty
     lower_duty = max(0, min(100, directed_duty * (1 - abs(angle) / 2)))
     lower_directed_duty = 100 - lower_duty if speed >= 0 else lower_duty
