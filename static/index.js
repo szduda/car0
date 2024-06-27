@@ -97,7 +97,7 @@ document.onkeydown = (e) => {
 
   if (e.key in ['w', 's']) {
     const fwd = e.key === 'w'
-    const newSpeed = fwd ? speed - speed
+    const newSpeed = fwd ? speed : -speed
     socket.send(`speed:${newSpeed / 10.0}`)
     log(`Drive ${fwd ? 'forward' : 'backwards'} with speed: ${newSpeed}`, '#fb0')
   }
