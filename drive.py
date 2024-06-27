@@ -3,6 +3,11 @@ import RPi.GPIO as io
 
 class Drive:
   PWM_FREQ = 500
+  MIN_DUTY = 40
+
+  speed = 0.0
+  turn_angle = 0.0
+  brake = 1.0
 
   def __init__(self, p1, p2, p3, p4):
     io.setmode(io.BCM)
@@ -23,29 +28,25 @@ class Drive:
     self.pwm1.start(0)
     self.pwm2.start(0)
 
-    self.speed = 0.0
-    self.turn_angle = 0.0
-    self.brake = 1.0
-
   def go(self, speed, angle):
     self.speed = speed
     self.turn_angle = angle
 
-    braked_duty = 100 * abs(speed) * self.brake
+    braked_duty = (self.MIN_DUTY + 60 * abs(speed)) * self.brake
     directed_duty = 100 - braked_duty if speed >= 0 else braked_duty
-    lower_duty = braked_duty * (1 - abs(angle))
+    lower_duty = max(0, min(100, directed_duty * (1 - abs(angle) / 2)))
     lower_directed_duty = 100 - lower_duty if speed >= 0 else lower_duty
-    higher_duty = braked_duty * (1 + abs(angle))
+    higher_duty = max(0, min(100, directed_duty * (1 + abs(angle) / 2)))
     higher_directed_duty = 100 - higher_duty if speed >= 0 else higher_duty
 
     io.output(self.in1_pin, speed > 0)
     io.output(self.in3_pin, speed > 0)
 
     print(f'go motors go!    speed={speed}  angle={angle}\n'
-          f'                   hdd={higher_directed_duty}  ldd={lower_directed_duty}')
+          f'                    dd={directed_duty} hdd={higher_directed_duty}  ldd={lower_directed_duty}')
 
-    self.pwm1.ChangeDutyCycle(max(0, min(100, higher_directed_duty if angle >= 0 else lower_directed_duty)))
-    self.pwm2.ChangeDutyCycle(max(0, min(100, lower_directed_duty if angle >= 0 else higher_directed_duty)))
+    self.pwm1.ChangeDutyCycle(higher_directed_duty if angle >= 0 else lower_directed_duty)
+    self.pwm2.ChangeDutyCycle(lower_directed_duty if angle >= 0 else higher_directed_duty)
 
   def stop(self):
     self.speed = 0.0
