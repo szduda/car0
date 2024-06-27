@@ -31,10 +31,10 @@ class Drive:
     self.speed = speed
     self.turn_angle = angle
 
-    braked_speed = speed * self.brake
-    directed_duty = 100 - braked_speed if speed >= 0 else braked_speed
-    lower_speed = braked_speed * (1 - abs(angle))
-    lower_directed_duty = 100 - lower_speed if speed >= 0 else lower_speed
+    braked_duty = 100 * abs(speed) * self.brake
+    directed_duty = 100 - braked_duty if speed >= 0 else braked_duty
+    lower_duty = braked_duty * (1 - abs(angle))
+    lower_directed_duty = 100 - lower_duty if speed >= 0 else lower_duty
 
     io.output(self.in1_pin, speed > 0)
     io.output(self.in3_pin, speed > 0)
