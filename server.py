@@ -7,8 +7,8 @@ from vehicleMonitor import BatteryMonitor
 
 closing = False
 
-speed = 60
-angle = 30
+speed = 0.6
+angle = 0.0
 
 drive = Drive(12, 18, 13, 19)
 
@@ -67,21 +67,25 @@ async def steer(request, ws):
     if ':' in cmd:
       param, value_str = cmd.split(':')
       if param == 'speed':
-        speed = float(value_str)
-        if speed != 0:
-          print(f'go with speed={speed} angle={angle}')
+        if value_str not in ["0", ""]:
+          new_speed = float(value_str)
+          speed = new_speed
+          print(f'go with speed={speed} new_speed={new_speed} angle={angle}')
           # drive.go(speed=speed, angle=angle)
         else:
           print(f'go with speed 0? wat? ah, ok - just stop')
           drive.stop()
 
       if param == 'angle':
-        angle = float(value_str)
         if speed != 0:
-          print(f'go with speed={speed} angle={angle}')
+          new_angle = float(value_str)
+          angle = new_angle
+          print(f'go with speed={speed} new_angle={new_angle}, angle={angle}')
           # drive.go(speed=speed, angle=angle)
         else:
           print('can\'t touch this (angle when speed=0)')
+
+      continue
 
     match cmd:
       case 'rtl':
