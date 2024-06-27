@@ -72,6 +72,7 @@ const steerKeyMap = {
 }
 
 const accKeys = {w: true, s: true}
+const rotateKeys = {q: true, e: true}
 const turnKeys = {a: true, d: true}
 
 let speed = 6
@@ -121,13 +122,13 @@ document.onkeyup = (e) => {
     return
   }
 
-  if(e.key in ['w', 's', 'q', 'e']) {
+  if(e.key in accKeys || e.key in rotateKeys) {
     socket.send('stp')
     speed = 0
     log('Stop', '#fb0')
   }
 
-  if(e.key in ['a', 'd']) {
+  if(e.key in turnKeys) {
     angle = 0
     socket.send('angle:0')
     log('Go straight', '#fb0')
