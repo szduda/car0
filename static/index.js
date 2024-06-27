@@ -53,15 +53,15 @@ sse.onerror = () => {
 
 // User interactions
 const speedKeyMap = {
-  ArrowUp: 6,
-  ArrowDown: 4,
-  3: 3,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 7,
-  8: 8,
-  9: 9,
+  ArrowUp: 0.6,
+  ArrowDown: 0.4,
+  3: 0.3,
+  4: 0.4,
+  5: 0.5,
+  6: 0.6,
+  7: 0.7,
+  8: 0.8,
+  9: 0.9,
 }
 
 const steerKeyMap = {
@@ -75,7 +75,7 @@ const accKeys = {w: true, s: true}
 const rotateKeys = {q: true, e: true}
 const turnKeys = {a: true, d: true}
 
-let speed = 6
+let speed = 0.6
 let angle = 0
 
 const getKeyId = (key) => key === ' ' ? 'space' : key
@@ -87,9 +87,9 @@ document.onkeydown = (e) => {
 
   if (e.key in speedKeyMap) {
     speed = speedKeyMap[e.key]
-    speedKeyMap.ArrowUp = Math.min(speed + 1, 9)
-    speedKeyMap.ArrowDown = Math.max(speed - 1, 3)
-    socket.send(`speed:${speed / 10.0}`)
+    speedKeyMap.ArrowUp = Math.min(speed + 0.1, 0.9)
+    speedKeyMap.ArrowDown = Math.max(speed - 0.1, 0.3)
+    socket.send(`speed:${speed}`)
     log(`New speed [${speed}]`, '#fb0')
   }
 
@@ -101,8 +101,11 @@ document.onkeydown = (e) => {
 
   if (e.key in accKeys) {
     const fwd = e.key === 'w'
+    if(speed === 0) {
+      speed = 0.6
+    }
     const newSpeed = fwd ? speed : -speed
-    socket.send(`speed:${newSpeed / 10.0}`)
+    socket.send(`speed:${newSpeed}`)
     log(`Drive ${fwd ? 'forward' : 'backwards'} with speed: ${newSpeed}`, '#fb0')
   }
 
