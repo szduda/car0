@@ -64,7 +64,7 @@ async def steer(request, ws):
     if ':' in cmd:
       param, value_str = cmd.split(':')
       if param == 'speed':
-        speed = int(value_str) / 10.0
+        speed = float(value_str)
         if speed != 0:
           drive.go(speed=speed, angle=angle)
         else:
