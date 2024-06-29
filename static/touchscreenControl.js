@@ -14,6 +14,9 @@ const lastTouch = {
   y: -1,
 }
 
+let lastSpeed = 0;
+let lastAngle = 0;
+
 const stop = () => {
   socket.send('stp')
   log('Stop')
@@ -66,14 +69,14 @@ const onTouchMove = e => {
 
     if (speed !== lastSpeed) {
       socket.send(`speed:${speed}`)
+      lastSpeed = speed
     }
 
     if (angle !== lastAngle) {
       socket.send(`angle:${angle}`)
+      lastAngle = angle
     }
 
-    lastSpeed = speed
-    lastAngle = angle
     log(`touchmove go with speed=${speed}, angle=${angle}`)
   }
 }
