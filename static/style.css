@@ -154,3 +154,20 @@ h1 {
   width: 360px;
   background: chocolate;
 }
+
+#stopButton {
+  background: #fa4;
+  border: none;
+  border-radius: 50%;
+  padding: 2rem;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04rem;
+  color: f1e1d1;
+}

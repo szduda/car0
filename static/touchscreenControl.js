@@ -58,3 +58,8 @@ const onTouchMove = e => {
 }
 const debouncedOnTouchMove = throttle(onTouchMove, 16)
 touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
+
+const stop = () => {
+  socket.send('stp')
+}
+document.getElementById('stopButton').addEventListener('click', stop)
