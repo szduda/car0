@@ -196,8 +196,8 @@ h1 {
     position: fixed;
     rotate: 90deg;
     padding: 0;
-    left: -80px;
-    bottom: 250px;
+    left: -82px;
+    bottom: 0px;
     transform-origin: top right;
     width: 460px;
     scale: 0.75;
