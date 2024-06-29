@@ -2,7 +2,7 @@
 const socket = new WebSocket(`ws://${location.host}/steer`)
 
 socket.addEventListener('message', (ev) => log(ev.data, '#04f'))
-socket.addEventListener('open', () => log('WS opened', '#4f2'))
+socket.addEventListener('open', () => socket.send('stp') )//log('WS opened', '#4f2'))
 socket.addEventListener('error', () => log('WS error', '#f8a'))
 socket.addEventListener('close', () => log('WS closed'))
 
