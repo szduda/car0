@@ -38,7 +38,6 @@ async def monitor(request, sse):
       'h': h,
       'm': m,
     })
-
   print('SSE endpoint closed')
 
 
@@ -46,6 +45,7 @@ async def monitor(request, sse):
 @with_websocket
 async def steer(request, ws):
   global speed, closing, angle
+  drive.init()
   while not closing:
     cmd = str(await ws.receive())
     print(f'[{cmd}] command received')
@@ -102,7 +102,7 @@ async def steer(request, ws):
         speed = 0
         await ok()
       case 'bye':
-        print('drive deinit; closing=True')
+        print('closing=True')
         drive.deinit()
         closing = True
         await ws.send('farewell')
@@ -110,7 +110,8 @@ async def steer(request, ws):
         print('unknown command')
         await ws.send('unknown command')
 
-  print('WS endpoint closed')
+  drive.deinit()
+  print('WS endpoint closed.')
 
 
 @app.route("/static/<path:path>")
@@ -126,6 +127,5 @@ if __name__ == '__main__':
     print("Starting the server...")
     app.run()
   except KeyboardInterrupt:
-    print("Deinitializing vehicle control...")
     drive.deinit()
     print("Server closed.")

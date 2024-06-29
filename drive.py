@@ -5,28 +5,34 @@ class Drive:
   PWM_FREQ = 500
   MIN_DUTY = 40
 
+  pwm1 = None
+  pwm2 = None
+
   speed = 0.0
   turn_angle = 0.0
   performance = 1.0
 
   def __init__(self, p1, p2, p3, p4):
-    io.setmode(io.BCM)
 
     self.in1_pin = p1
     self.in2_pin = p2
     self.in3_pin = p3
     self.in4_pin = p4
 
-    io.setup(self.in1_pin, io.OUT)
-    io.setup(self.in2_pin, io.OUT)
-    io.setup(self.in3_pin, io.OUT)
-    io.setup(self.in4_pin, io.OUT)
+    self.init()
 
-    self.pwm1 = io.PWM(self.in2_pin, self.PWM_FREQ)
-    self.pwm2 = io.PWM(self.in4_pin, self.PWM_FREQ)
+  def init(self):
+      io.setmode(io.BCM)
+      io.setup(self.in1_pin, io.OUT)
+      io.setup(self.in2_pin, io.OUT)
+      io.setup(self.in3_pin, io.OUT)
+      io.setup(self.in4_pin, io.OUT)
 
-    self.pwm1.start(0)
-    self.pwm2.start(0)
+      self.pwm1 = io.PWM(self.in2_pin, self.PWM_FREQ)
+      self.pwm2 = io.PWM(self.in4_pin, self.PWM_FREQ)
+
+      self.pwm1.start(0)
+      self.pwm2.start(0)
 
   def go(self, speed, angle):
     self.speed = speed
@@ -71,3 +77,5 @@ class Drive:
     self.pwm1.stop()
     self.pwm2.stop()
     io.cleanup()
+    print("Vehicle control deinitialized.")
+
