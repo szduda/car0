@@ -45,7 +45,12 @@ async def monitor(request, sse):
 @with_websocket
 async def steer(request, ws):
   global speed, closing, angle
-  drive.init()
+
+  try:
+    drive.init()
+  except RuntimeError:
+    print('drive already initialized')
+
   while not closing:
     cmd = str(await ws.receive())
     print(f'[{cmd}] command received')
