@@ -73,11 +73,11 @@ const debouncedOnTouchMove = throttle(onTouchMove, 16)
 touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
 
 // ROTATE
-const rotate = (e) => {
-  const left = e.target.id === 'rotateLeft'
+const rotate = (dir) => (e) => {
+  const left = dir === 'left'
   socket.send(left ? 'rtl' : 'rtr')
 }
-document.getElementById('rotateLeft').addEventListener('touchstart', rotate)
+document.getElementById('rotateLeft').addEventListener('touchstart', rotate('left'))
 document.getElementById('rotateLeft').addEventListener('touchend', stop)
-document.getElementById('rotateRight').addEventListener('touchstart', rotate)
+document.getElementById('rotateRight').addEventListener('touchstart', rotate('right'))
 document.getElementById('rotateRight').addEventListener('touchend', stop)

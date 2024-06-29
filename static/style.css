@@ -171,6 +171,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 0.04rem;
   color: #930;
+  user-select: none;
 }
 
 .rotate span {
