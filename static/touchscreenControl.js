@@ -64,8 +64,16 @@ const onTouchMove = e => {
     lastTouch.y = y
     const { speed, angle } = getDriveParams()
 
-    socket.send(`speed:${speed}`)
-    socket.send(`angle:${angle}`)
+    if (speed !== lastSpeed) {
+      socket.send(`speed:${speed}`)
+    }
+
+    if (angle !== lastAngle) {
+      socket.send(`angle:${angle}`)
+    }
+
+    lastSpeed = speed
+    lastAngle = angle
     log(`touchmove go with speed=${speed}, angle=${angle}`)
   }
 }
