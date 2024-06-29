@@ -191,7 +191,7 @@ h1 {
   .controlsWrapper {
     gap: 0.25rem;
     flex-direction: column;
-    padding: 0.25rem;
+    padding: 1rem;
   }
 
  #vehicleMonitor {
