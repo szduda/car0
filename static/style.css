@@ -150,8 +150,9 @@ h1 {
 
 #touchArea {
   border-radius: 50%;
-  height: 360px;
-  width: 360px;
+  max-height: 360px;
+  max-width: 360px;
+  aspect-ratio: 1;
   background: chocolate;
 }
 
@@ -159,9 +160,10 @@ h1 {
   background: #f96;
   border: none;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
@@ -172,7 +174,7 @@ h1 {
 }
 
 .rotate[data-rotate="right"] {
-  transform: translateX(-3rem);
+  transform: translateY(-3rem);
 }
 
 .rotate span {
@@ -180,5 +182,37 @@ h1 {
 }
 
 .rotate small {
-  font-size: 1.5rem;
+  font-size: x-smaller;
+}
+
+/* MOBILE STYLES */
+@media (max-width: 767) {
+  header {
+    display: none;
+  }
+
+  .controlsWrapper {
+    gap: 2rem;
+    flex-direction: column;
+  }
+
+ #vehicleMonitor {
+    position: fixed;
+    rotate: 90deg;
+    padding: 0;
+    left: -87px;
+    bottom: 95px;
+    transform-origin: top right;
+    width: 460px;
+    scale: 0.75;
+  }
+
+  .rotate {
+    rotate: 90deg;
+    font-size: 1.5rem;
+  }
+
+  #touchArea {
+    width: 100%;
+  }
 }
