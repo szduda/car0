@@ -27,6 +27,7 @@ touchArea.addEventListener('touchstart', e => {
 
 touchArea.addEventListener('touchend', e => {
   e.preventDefault()
+  socket.send('stp')
   console.log('touchend')
 }, {passive: false})
 
@@ -59,7 +60,9 @@ const onTouchMove = e => {
 const debouncedOnTouchMove = throttle(onTouchMove, 16)
 touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
 
-const stop = () => {
-  socket.send('stp')
+const getRotate = (e) => {
+  console.log(e.target)
+  const direction = e.target.dataset.rotate
+  socket.send(direction === 'left' ? 'rtl' : 'rtr')
 }
-document.getElementById('stopButton').addEventListener('click', stop)
+document.getElementById('rotate').addEventListener('click', rotate)
