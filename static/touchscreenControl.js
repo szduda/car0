@@ -19,7 +19,7 @@ const stop = () => {
   log('Stop')
 }
 
-const openFullscreen = (elem) => {
+const goFullscreen = (elem = document.body) => {
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -29,7 +29,7 @@ const openFullscreen = (elem) => {
 
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
-  openFullscreen(e.target)
+  goFullscreen()
   const { x, y } = getCoords(e.changedTouches[0])
   firstTouch.x = x
   firstTouch.y = y
