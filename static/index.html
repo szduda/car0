@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<div class="keyboardWrapper" style="display: none">
+<div class="controlsWrapper" style="display: none">
   <div class="keyboard">
       <div id="Escape">Esc</div>
   </div>
@@ -50,12 +50,16 @@
   </div>
 </div>
 
-<canvas id="touchArea" style="width: 100dvw; height: 100%; min-height: 500px;"></canvas>
+<div class="controlsWrapper">
+  <canvas id="touchArea"></canvas>
+</div>
 
-
-<div id="debugOut"></div>
+<div id="debugOut" class="hidden"></div>
 <button id="debugOutToggle">Debug</button>
 
-<script type="text/javascript" src="static/index.js"></script>
+<script type="text/javascript" src="static/throttle.js"></script>
+<script type="text/javascript" src="static/debug.js"></script>
+<script type="text/javascript" src="static/communication.js"></script>
+<script type="text/javascript" src="static/touchscreenControl.js"></script>
 </body>
 </html>
