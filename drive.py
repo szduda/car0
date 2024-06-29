@@ -19,8 +19,6 @@ class Drive:
     self.in3_pin = p3
     self.in4_pin = p4
 
-    self.init()
-
   def init(self):
       io.setmode(io.BCM)
       io.setup(self.in1_pin, io.OUT)
