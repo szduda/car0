@@ -64,8 +64,7 @@ const debouncedOnTouchMove = throttle(onTouchMove, 16)
 touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
 
 // ROTATE
-const getRotate = (e) => {
-  console.log(e.target)
+const rotate = (e) => {
   const direction = e.target.dataset.rotate
   socket.send(direction === 'left' ? 'rtl' : 'rtr')
 }
