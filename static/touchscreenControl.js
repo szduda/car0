@@ -14,9 +14,13 @@ const lastTouch = {
   y: -1,
 }
 
+const stop = () => {
+  socket.send('stp')
+  log('Stop')
+}
+
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
-  log('Touch start')
   const { x, y } = getCoords(e.changedTouches[0])
   firstTouch.x = x
   firstTouch.y = y
@@ -27,8 +31,7 @@ touchArea.addEventListener('touchstart', e => {
 
 touchArea.addEventListener('touchend', e => {
   e.preventDefault()
-  socket.send('stp')
-  console.log('touchend')
+  stop()
 }, {passive: false})
 
 const normalize = value => {
@@ -54,15 +57,19 @@ const onTouchMove = e => {
 
     socket.send(`speed:${speed}`)
     socket.send(`angle:${angle}`)
-    console.log('touchmove go with speed =', speed, 'angle =', angle)
+    log(`touchmove go with speed=${speed}, angle=${angle}`)
   }
 }
 const debouncedOnTouchMove = throttle(onTouchMove, 16)
 touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
 
+// ROTATE
 const getRotate = (e) => {
   console.log(e.target)
   const direction = e.target.dataset.rotate
   socket.send(direction === 'left' ? 'rtl' : 'rtr')
 }
-document.getElementById('rotate').addEventListener('click', rotate)
+document.getElementById('rotateLeft').addEventListener('touchstart', rotate)
+document.getElementById('rotateLeft').addEventListener('touchend', stop)
+document.getElementById('rotateRight').addEventListener('touchstart', rotate)
+document.getElementById('rotateRight').addEventListener('touchend', stop)
