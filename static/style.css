@@ -1,5 +1,5 @@
 html, body {
-  background: #444;
+  background: #111;
   color: #f1f1f1;
   height: 100dvh;
   font-weight: 500;
@@ -132,12 +132,12 @@ h1 {
 }
 
 #debugOut.hidden {
-  transform: translateY(-19rem);
+  transform: translateY(100%);
 }
 
 #debugOutToggle {
-  position: absolute;
-  bottom: 1rem;
+  position: fixed;
+  top: 95vh;
   right: 1rem;
   background: #777;
   border: 1px solid #444;
@@ -159,15 +159,26 @@ h1 {
   background: #f96;
   border: none;
   border-radius: 50%;
-  padding: 2rem;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04rem;
-  color: #a54;
+  color: #930;
+}
+
+.rotate[data-rotate="right"] {
+  transform: translateX(-3rem);
+}
+
+.rotate span {
+  text-shadow: 0 0 2px #800a;
+}
+
+.rotate small {
+  font-size: 1.5rem;
 }
