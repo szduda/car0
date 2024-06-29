@@ -1,5 +1,5 @@
 const touchArea = document.getElementById('touchArea')
-const TOUCH_THRESHOLD = 0.3
+const TOUCH_THRESHOLD = 0.2
 const TOUCH_STEP = 20
 const getCoords = ({pageX, pageY}) => ({
   x: Math.round(pageX / TOUCH_STEP) * TOUCH_STEP,
