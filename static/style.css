@@ -186,7 +186,7 @@ h1 {
 }
 
 /* MOBILE STYLES */
-@media (max-width: 767) {
+@media (max-width: 767px) {
   header {
     display: none;
   }
