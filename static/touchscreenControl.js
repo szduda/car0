@@ -74,8 +74,8 @@ touchArea.addEventListener('touchmove', debouncedOnTouchMove, {passive: false})
 
 // ROTATE
 const rotate = (e) => {
-  const direction = e.target.dataset.rotate
-  socket.send(direction === 'left' ? 'rtl' : 'rtr')
+  const left = e.target.id === 'rotateLeft'
+  socket.send(left ? 'rtl' : 'rtr')
 }
 document.getElementById('rotateLeft').addEventListener('touchstart', rotate)
 document.getElementById('rotateLeft').addEventListener('touchend', stop)
