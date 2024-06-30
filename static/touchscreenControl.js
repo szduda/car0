@@ -145,7 +145,7 @@ const normalize = value => {
     return normal
   }
   return 0
-}§
+}
 
 const getDriveParams = () => ({
   speed: normalize((lastTouch.x - firstTouch.x) / TOUCH_STEP),
