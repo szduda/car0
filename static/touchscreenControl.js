@@ -106,7 +106,7 @@ touchArea.addEventListener('touchstart', e => {
   const { x, y } = getCoords(e.changedTouches[0])
   firstTouch.x = x
   firstTouch.y = y
-  lastTouch.x = e.changedTouches.
+  lastTouch.x = x
   lastTouch.y = y
 
   const [cX,cY] = getInteractionLocation(e)
