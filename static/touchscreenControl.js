@@ -30,6 +30,57 @@ const goFullscreen = (elem = document.body) => {
   }
 }
 
+function canvas_arrow(context, fromx, fromy, tox, toy, r){
+	var x_center = tox;
+	var y_center = toy;
+
+	var angle;
+	var x;
+	var y;
+
+	context.beginPath();
+
+	angle = Math.atan2(toy-fromy,tox-fromx)
+	x = r*Math.cos(angle) + x_center;
+	y = r*Math.sin(angle) + y_center;
+
+	context.moveTo(x, y);
+
+	angle += (1/3)*(2*Math.PI)
+	x = r*Math.cos(angle) + x_center;
+	y = r*Math.sin(angle) + y_center;
+
+	context.lineTo(x, y);
+
+	angle += (1/3)*(2*Math.PI)
+	x = r*Math.cos(angle) + x_center;
+	y = r*Math.sin(angle) + y_center;
+
+	context.lineTo(x, y);
+
+	context.closePath();
+
+	context.fill();
+}
+
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+
+// Start a new Path
+ctx.beginPath();
+ctx.moveTo(150, 20);
+ctx.lineTo(150, 280);
+//ctx.moveTo(20, 150);
+//ctx.lineTo(280, 150);
+ctx.lineWidth = 2
+ctx.strokeStyle = '#000000';
+ctx.fillStyle = '#000000'
+
+canvas_arrow(ctx, 20, 150, 280, 150, 2)
+
+// Draw the Path
+ctx.stroke();
+
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
   goFullscreen()

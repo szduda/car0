@@ -199,7 +199,7 @@ h1 {
     rotate: 90deg;
     padding: 0;
     left: -82px;
-    bottom: 0px;
+    bottom: -20px;
     transform-origin: top right;
     width: 460px;
     scale: 0.75;
@@ -213,5 +213,6 @@ h1 {
   #touchArea {
     width: 100%;
     rotate: 90deg;
+    border-radius: 8px;
   }
 }
