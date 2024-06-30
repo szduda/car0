@@ -63,7 +63,7 @@ function canvas_arrow(context, fromx, fromy, tox, toy, r){
 	context.fill();
 }
 
-const ctx = toychArea.getContext("2d");
+const ctx = touchArea.getContext("2d");
 
 const initCanvas = () => {
   ctx.beginPath();
