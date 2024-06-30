@@ -22,7 +22,7 @@ class Drive:
     self.pi.set_mode(self.in3_pin, pigpio.OUTPUT)
 
   def dutify(self, pwm_id, dc):
-    self.pi.hardware_PWM(self.in2_pin if pwm_id == 1 else self.in4_pin, self.PWM_FREQ, dc * 10000)
+    self.pi.hardware_PWM(self.in2_pin if pwm_id == 1 else self.in4_pin, self.PWM_FREQ, round(dc * 10000))
 
   def go(self, speed, angle):
     self.speed = speed
