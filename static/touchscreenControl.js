@@ -65,24 +65,24 @@ function canvas_arrow(context, fromx, fromy, tox, toy, r){
 
 const ctx = touchArea.getContext("2d");
 
-const drawAxes = (x=0, y=0) => {
+const drawAxes = (x=150, y=150) => {
   const W = touchArea.width
   const H = touchArea.height
   ctx.clearRect(0, 0, W, H);
   ctx.beginPath();
-  ctx.moveTo(150+x, 50+y);
-  ctx.lineTo(150+x, 250+y);
-  ctx.moveTo(50+x, 150+y);
-  ctx.lineTo(250+x, 150+y);
+  ctx.moveTo(x, y+100);
+  ctx.lineTo(x, y-100);
+  ctx.moveTo(x-100, y);
+  ctx.lineTo(x+100, y);
   ctx.lineWidth = 2
   ctx.strokeStyle = '#fff';
   ctx.stroke();
 
   ctx.fillStyle = '#fff'
-  canvas_arrow(ctx, 250+x, 150+y, 280+x, 150+y, 20)
-  canvas_arrow(ctx, 150+x, 250+y, 150+x, 280+y, 20)
-  canvas_arrow(ctx, 50+x, 150+y, 20+x, 150+y, 20)
-  canvas_arrow(ctx, 150+x, 50+y, 150+x, 20+y, 20)
+  canvas_arrow(ctx, x, y+120, x, y+150, 20)
+  canvas_arrow(ctx, x, y-120, x, y-150, 20)
+  canvas_arrow(ctx, x-120, y, x-150, y, 20)
+  canvas_arrow(ctx, x+120, y, x+150, y, 20)
 }
 
 drawAxes()
