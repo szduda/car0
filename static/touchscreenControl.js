@@ -104,6 +104,7 @@ const drawLine = (x,y,xx,yy, color='#00F') => {
   ctx.beginPath()
   ctx.moveTo(x, y)
   ctx.lineTo(xx, yy)
+  ctx.lineWidth = 7;
   ctx.strokeStyle = color
   ctx.stroke()
 }
