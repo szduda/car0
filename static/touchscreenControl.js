@@ -65,7 +65,10 @@ function canvas_arrow(context, fromx, fromy, tox, toy, r){
 
 const ctx = touchArea.getContext("2d");
 
-const initCanvas = () => {
+const drawAxes = (x=0, y=0) => {
+  const W = touchArea.width
+  const H = touchArea.height
+  ctx.clearRect(0, 0, W, H);
   ctx.beginPath();
   ctx.moveTo(150, 50);
   ctx.lineTo(150, 250);
@@ -78,10 +81,13 @@ const initCanvas = () => {
   ctx.fillStyle = '#fff'
   canvas_arrow(ctx, 250, 150, 280, 150, 20)
   canvas_arrow(ctx, 150, 250, 150, 280, 20)
+  canvas_arrow(ctx, 30, 150, 0, 150, 20)
+  canvas_arrow(ctx, 150, 30, 150, 0, 20)
+
 
 }
 
-initCanvas()
+drawAxes()
 
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
@@ -91,6 +97,9 @@ touchArea.addEventListener('touchstart', e => {
   firstTouch.y = y
   lastTouch.x = x
   lastTouch.y = y
+
+  drawAxes(x,y)
+
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
 
