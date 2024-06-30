@@ -110,6 +110,7 @@ const drawLine = (x,y,xx,yy, color='#00F') => {
 }
 
 const drawResultant = () => {
+  const [cX,cY] = getInteractionLocation(firstTouch)
   const [dX,dY] = getInteractionLocation(lastTouch)
   drawLine(cY, touchArea.width - cX, dY, touchArea.width - dX)
 }
