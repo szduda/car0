@@ -103,14 +103,14 @@ async def steer(request, ws):
         await ok()
       case 'bye':
         print('closing=True')
-        drive.deinit()
+        drive.stop()
         closing = True
         await ws.send('farewell')
       case _:
         print('unknown command')
         await ws.send('unknown command')
 
-  drive.deinit()
+  drive.stop()
   print('WS endpoint closed.')
 
 
@@ -127,5 +127,5 @@ if __name__ == '__main__':
     print("Starting the server...")
     app.run()
   except KeyboardInterrupt:
-    drive.deinit()
+    drive.stop()
     print("Server closed.")
