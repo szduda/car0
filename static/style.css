@@ -211,7 +211,7 @@ h1 {
   }
 
   #touchArea {
-    width: 100%;
+    width: 90%;
     rotate: 90deg;
     border-radius: 8px;
   }

@@ -72,10 +72,10 @@ const initCanvas = () => {
   ctx.moveTo(50, 150);
   ctx.lineTo(250, 150);
   ctx.lineWidth = 2
-  ctx.strokeStyle = '#000000';
-  ctx.fillStyle = '#000000'
+  ctx.strokeStyle = '#fff';
   ctx.stroke();
 
+  ctx.fillStyle = '#fff'
   canvas_arrow(ctx, 250, 150, 280, 150, 20)
   canvas_arrow(ctx, 150, 250, 150, 280, 20)
 
