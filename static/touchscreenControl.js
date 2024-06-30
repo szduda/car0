@@ -63,23 +63,23 @@ function canvas_arrow(context, fromx, fromy, tox, toy, r){
 	context.fill();
 }
 
-const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
+const ctx = toychArea.getContext("2d");
 
-// Start a new Path
-ctx.beginPath();
-ctx.moveTo(150, 20);
-ctx.lineTo(150, 280);
-//ctx.moveTo(20, 150);
-//ctx.lineTo(280, 150);
-ctx.lineWidth = 2
-ctx.strokeStyle = '#000000';
-ctx.fillStyle = '#000000'
+const initCanvas = () => {
+  ctx.beginPath();
+  ctx.moveTo(150, 20);
+  ctx.lineTo(150, 280);
+  //ctx.moveTo(20, 150);
+  //ctx.lineTo(280, 150);
+  ctx.lineWidth = 2
+  ctx.strokeStyle = '#000000';
+  ctx.fillStyle = '#000000'
+  ctx.stroke();
 
-canvas_arrow(ctx, 20, 150, 280, 150, 2)
+  canvas_arrow(ctx, 20, 150, 280, 150, 2)
+}
 
-// Draw the Path
-ctx.stroke();
+initCanvas()
 
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
