@@ -18,6 +18,8 @@ let lastSpeed = 0;
 let lastAngle = 0;
 
 const stop = () => {
+  angle = 0
+  speed = 0
   socket.send('stp')
   log('Stop')
 }
