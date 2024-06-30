@@ -70,21 +70,19 @@ const drawAxes = (x=0, y=0) => {
   const H = touchArea.height
   ctx.clearRect(0, 0, W, H);
   ctx.beginPath();
-  ctx.moveTo(150, 50);
-  ctx.lineTo(150, 250);
-  ctx.moveTo(50, 150);
-  ctx.lineTo(250, 150);
+  ctx.moveTo(150+x, 50+y);
+  ctx.lineTo(150+x, 250+y);
+  ctx.moveTo(50+x, 150+y);
+  ctx.lineTo(250+x, 150+y);
   ctx.lineWidth = 2
   ctx.strokeStyle = '#fff';
   ctx.stroke();
 
   ctx.fillStyle = '#fff'
-  canvas_arrow(ctx, 250, 150, 280, 150, 20)
-  canvas_arrow(ctx, 150, 250, 150, 280, 20)
-  canvas_arrow(ctx, 30, 150, 0, 150, 20)
-  canvas_arrow(ctx, 150, 30, 150, 0, 20)
-
-
+  canvas_arrow(ctx, 250+x, 150+y, 280+x, 150+y, 20)
+  canvas_arrow(ctx, 150+x, 250+y, 150+x, 280+y, 20)
+  canvas_arrow(ctx, 50+x, 150+y, 20+x, 150+y, 20)
+  canvas_arrow(ctx, 150+x, 50+y, 150+x, 20+y, 20)
 }
 
 drawAxes()
