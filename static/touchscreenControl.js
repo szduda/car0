@@ -30,6 +30,16 @@ const goFullscreen = (elem = document.body) => {
   }
 }
 
+function getInteractionLocation(pos) {
+    const rect = touchArea.getBoundingClientRect()
+    const x_rel = pos.x - rect.left
+    const y_rel = pos.y - rect.top
+    const x = Math.round((x_rel * touchArea.width) / rect.width)
+    const y = Math.round((y_rel * touchArea.height) / rect.height)
+    return [x, y]
+};
+
+
 function canvas_arrow(context, fromx, fromy, tox, toy, r){
 	var x_center = tox;
 	var y_center = toy;
@@ -102,15 +112,6 @@ const drawResultant = () => {
   const [dX,dY] = getInteractionLocation(lastTouch)
   drawLine(cY, touchArea.width - cX, dY, touchArea.width - dX)
 }
-
-function getInteractionLocation(pos) {
-    const rect = touchArea.getBoundingClientRect()
-    const x_rel = pos.x - rect.left
-    const y_rel = pos.y - rect.top
-    const x = Math.round((x_rel * touchArea.width) / rect.width)
-    const y = Math.round((y_rel * touchArea.height) / rect.height)
-    return [x, y]
-};
 
 const drawFirstTouchAxes = () => {
   const [cX,cY] = getInteractionLocation(firstTouch)
