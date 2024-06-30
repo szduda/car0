@@ -5,9 +5,6 @@ class Drive:
   PWM_FREQ = 500
   MIN_DUTY = 40
 
-  pwm1 = None
-  pwm2 = None
-
   speed = 0.0
   turn_angle = 0.0
   performance = 1.0
@@ -44,8 +41,8 @@ class Drive:
     print(f'go motors go!    speed={speed}  angle={angle}\n'
           f'                    bd={braked_duty} dd={directed_duty} hdd={higher_directed_duty}  ldd={lower_directed_duty}')
 
-    self.pwm1.ChangeDutyCycle(higher_directed_duty if angle >= 0 else lower_directed_duty)
-    self.pwm2.ChangeDutyCycle(lower_directed_duty if angle >= 0 else higher_directed_duty)
+    self.dutify(1, higher_directed_duty if angle >= 0 else lower_directed_duty)
+    self.dutify(2, lower_directed_duty if angle >= 0 else higher_directed_duty)
 
   def stop(self):
     self.speed = 0.0
