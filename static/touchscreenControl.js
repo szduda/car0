@@ -79,10 +79,10 @@ const drawAxes = (x=150, y=150) => {
   ctx.stroke();
 
   ctx.fillStyle = '#fff'
-  canvas_arrow(ctx, x, y+120, x, y+150, 20)
-  canvas_arrow(ctx, x, y-120, x, y-150, 20)
-  canvas_arrow(ctx, x-120, y, x-150, y, 20)
-  canvas_arrow(ctx, x+120, y, x+150, y, 20)
+  canvas_arrow(ctx, x, y+100, x, y+130, 20)
+  canvas_arrow(ctx, x, y-100, x, y-130, 20)
+  canvas_arrow(ctx, x-100, y, x-130, y, 20)
+  canvas_arrow(ctx, x+100, y, x+130, y, 20)
 }
 
 drawAxes()
@@ -110,7 +110,7 @@ touchArea.addEventListener('touchstart', e => {
   lastTouch.y = y
 
   const [cX,cY] = getInteractionLocation(e)
-  drawAxes(cX,cY)
+  drawAxes(cY,cX)
 
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
