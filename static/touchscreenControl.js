@@ -65,10 +65,14 @@ function canvas_arrow(context, fromx, fromy, tox, toy, r){
 
 const ctx = touchArea.getContext("2d");
 
-const drawAxes = (x=150, y=150) => {
+const clearCanvas = () => {
   const W = touchArea.width
   const H = touchArea.height
   ctx.clearRect(0, 0, W, H);
+}
+
+const drawAxes = (x=150, y=150) => {
+  clearCanvas();
   ctx.beginPath();
   ctx.moveTo(x, y+50);
   ctx.lineTo(x, y-50);
@@ -86,12 +90,17 @@ const drawAxes = (x=150, y=150) => {
 }
 drawAxes()
 
-const drawResultant = (x, y, xx, yy) => {
+const drawLine = (x,y,xx,yy, color='#00F') => {
   ctx.beginPath()
   ctx.moveTo(x, y)
   ctx.lineTo(xxx, yy)
-  ctx.strokeStyle = '#00F'
+  ctx.strokeStyle = color
   ctx.stroke()
+}
+
+const drawResultant = () => {
+  const [dX,dY] = getInteractionLocation(lastTouch)
+  drawLine(cY, touchArea.width - cX, dY, touchArea.width - dX)
 }
 
 function getInteractionLocation(pos) {
@@ -103,6 +112,12 @@ function getInteractionLocation(pos) {
     return [x, y]
 };
 
+const drawFirstTouchAxes = () => {
+  const [cX,cY] = getInteractionLocation(firstTouch)
+  console.log('canvas x,y', cY,touchArea.width - cX)
+  drawAxes(cY,touchArea.width - cX)
+}
+
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
 
@@ -113,14 +128,13 @@ touchArea.addEventListener('touchstart', e => {
   lastTouch.x = x
   lastTouch.y = y
 
-  const [cX,cY] = getInteractionLocation(firstTouch)
-  console.log('touchmstart canvas x,y', cY,touchArea.width - cX)
-  drawAxes(cY,touchArea.width - cX)
+  drawFirstTouchAxes()
 
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
 
 touchArea.addEventListener('touchend', e => {
+  clearCanvas();
   e.preventDefault()
   stop()
 }, {passive: false})
@@ -131,7 +145,7 @@ const normalize = value => {
     return normal
   }
   return 0
-}
+}§
 
 const getDriveParams = () => ({
   speed: normalize((lastTouch.x - firstTouch.x) / TOUCH_STEP),
@@ -156,9 +170,9 @@ const onTouchMove = e => {
       lastAngle = angle
     }
 
-    const [dX,dY] = getInteractionLocation(lastTouch)
-    console.log('touchmstart canvas x,y', cY,touchArea.width - cX)
-    drawResultant(cY, touchArea.width - cX, dY, touchArea.width - dX)
+    clearCanvas()
+    drawFirstTouchAxes()
+    drawResultant()
 
     log(`touchmove go with speed=${speed}, angle=${angle}`)
   }
