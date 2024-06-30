@@ -1,4 +1,4 @@
-import RPi.GPIO as io
+import pigpio
 
 
 class Drive:
@@ -19,18 +19,13 @@ class Drive:
     self.in3_pin = p3
     self.in4_pin = p4
 
-  def init(self):
-      io.setmode(io.BCM)
-      io.setup(self.in1_pin, io.OUT)
-      io.setup(self.in2_pin, io.OUT)
-      io.setup(self.in3_pin, io.OUT)
-      io.setup(self.in4_pin, io.OUT)
+    self.pi = pigpio.pi()
 
-      self.pwm1 = io.PWM(self.in2_pin, self.PWM_FREQ)
-      self.pwm2 = io.PWM(self.in4_pin, self.PWM_FREQ)
+    self.pi.set_mode(self.in1_pin, pigpio.OUTPUT)
+    self.pi.set_mode(self.in3_pin, pigpio.OUTPUT)
 
-      self.pwm1.start(0)
-      self.pwm2.start(0)
+  def dutify(self, pwm_id, dc):
+    self.pi.hardware_PWM(self.in2_pin if pwm_id == 1 else self.in4_pin, self.PWM_FREQ, dc * 10000)
 
   def go(self, speed, angle):
     self.speed = speed
@@ -43,8 +38,8 @@ class Drive:
     higher_duty = max(self.MIN_DUTY, min(100, braked_duty * (1 + abs(angle) * 1.5)))
     higher_directed_duty = 100 - higher_duty if speed >= 0 else higher_duty
 
-    io.output(self.in1_pin, speed > 0)
-    io.output(self.in3_pin, speed > 0)
+    self.pi.write(self.in1_pin, speed > 0)
+    self.pi.write(self.in3_pin, speed > 0)
 
     print(f'go motors go!    speed={speed}  angle={angle}\n'
           f'                    bd={braked_duty} dd={directed_duty} hdd={higher_directed_duty}  ldd={lower_directed_duty}')
@@ -54,10 +49,10 @@ class Drive:
 
   def stop(self):
     self.speed = 0.0
-    io.output(self.in1_pin, 0)
-    io.output(self.in3_pin, 0)
-    self.pwm1.ChangeDutyCycle(0)
-    self.pwm2.ChangeDutyCycle(0)
+    self.pi.write(self.in1_pin, 0)
+    self.pi.write(self.in3_pin, 0)
+    self.dutify(1, 0)
+    self.dutify(2, 0)
 
   def brake(self, on):
     self.performance = 0.5 if on else 1.0
@@ -65,15 +60,7 @@ class Drive:
 
   def rotate(self, side):
     left = side == "left"
-    io.output(self.in1_pin, not left)
-    io.output(self.in3_pin, left)
-    self.pwm1.ChangeDutyCycle(100 if left else 0)
-    self.pwm2.ChangeDutyCycle(0 if left else 100)
-
-  def deinit(self):
-    self.stop()
-    self.pwm1.stop()
-    self.pwm2.stop()
-    io.cleanup()
-    print("Vehicle control deinitialized.")
-
+    self.pi.write(self.in1_pin, not left)
+    self.pi.write(self.in3_pin, left)
+    self.dutify(1, 100 if left else 0)
+    self.dutify(2, 0 if left else 100)
