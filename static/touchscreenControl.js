@@ -84,24 +84,28 @@ const drawAxes = (x=150, y=150) => {
   canvas_arrow(ctx, x-50, y, x-80, y, 20)
   canvas_arrow(ctx, x+50, y, x+80, y, 20)
 }
-
 drawAxes()
 
-function getInteractionLocation(event) {
-    let pos = { x: event.clientX, y: event.clientY };
-    if (event.touches) {
-        pos = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-    }
-    const rect = event.target.getBoundingClientRect();
-    const x_rel = pos.x - rect.left;
-    const y_rel = pos.y - rect.top;
-    const x = Math.round((x_rel * event.target.width) / rect.width);
-    const y = Math.round((y_rel * event.target.height) / rect.height);
-    return [x, y];
+const drawResultant = (x, y, xx, yy) => {
+  ctx.beginPath()
+  ctx.moveTo(x, y)
+  ctx.lineTo(xxx, yy)
+  ctx.strokeStyle = '#00F'
+  ctx.stroke()
+}
+
+function getInteractionLocation(pos) {
+    const rect = touchArea.getBoundingClientRect()
+    const x_rel = pos.x - rect.left
+    const y_rel = pos.y - rect.top
+    const x = Math.round((x_rel * touchArea.width) / rect.width)
+    const y = Math.round((y_rel * touchArea.height) / rect.height)
+    return [x, y]
 };
 
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
+
   goFullscreen()
   const { x, y } = getCoords(e.changedTouches[0])
   firstTouch.x = x
@@ -109,8 +113,8 @@ touchArea.addEventListener('touchstart', e => {
   lastTouch.x = x
   lastTouch.y = y
 
-  const [cX,cY] = getInteractionLocation(e)
-  console.log('interactions', touchArea.height - cY,cX)
+  const [cX,cY] = getInteractionLocation(firstTouch)
+  console.log('touchmstart canvas x,y', cY,touchArea.width - cX)
   drawAxes(cY,touchArea.width - cX)
 
   console.log('touchstart at x,y:', x, y)
@@ -151,6 +155,10 @@ const onTouchMove = e => {
       socket.send(`angle:${angle}`)
       lastAngle = angle
     }
+
+    const [dX,dY] = getInteractionLocation(lastTouch)
+    console.log('touchmstart canvas x,y', cY,touchArea.width - cX)
+    drawResultant(cY, touchArea.width - cX, dY, touchArea.width - dX)
 
     log(`touchmove go with speed=${speed}, angle=${angle}`)
   }
