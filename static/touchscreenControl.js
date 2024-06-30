@@ -111,7 +111,7 @@ touchArea.addEventListener('touchstart', e => {
 
   const [cX,cY] = getInteractionLocation(e)
   console.log('interactions', touchArea.height - cY,cX)
-  drawAxes(touchArea.height - cY,cX)
+  drawAxes(cY,touchArea.width - cX)
 
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
