@@ -87,16 +87,30 @@ const drawAxes = (x=0, y=0) => {
 
 drawAxes()
 
+function getInteractionLocation(event) {
+    let pos = { x: event.clientX, y: event.clientY };
+    if (event.touches) {
+        pos = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }
+    const rect = event.target.getBoundingClientRect();
+    const x_rel = pos.x - rect.left;
+    const y_rel = pos.y - rect.top;
+    const x = Math.round((x_rel * event.target.width) / rect.width);
+    const y = Math.round((y_rel * event.target.height) / rect.height);
+    return [x, y];
+};
+
 touchArea.addEventListener('touchstart', e => {
   e.preventDefault()
   goFullscreen()
   const { x, y } = getCoords(e.changedTouches[0])
   firstTouch.x = x
   firstTouch.y = y
-  lastTouch.x = x
+  lastTouch.x = e.changedTouches.
   lastTouch.y = y
 
-  drawAxes(x,y)
+  const [cX,cY] = getInteractionLocation(e)
+  drawAxes(cX,cY)
 
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
