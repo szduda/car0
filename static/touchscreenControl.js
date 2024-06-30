@@ -67,16 +67,18 @@ const ctx = touchArea.getContext("2d");
 
 const initCanvas = () => {
   ctx.beginPath();
-  ctx.moveTo(150, 20);
-  ctx.lineTo(150, 280);
-  //ctx.moveTo(20, 150);
-  //ctx.lineTo(280, 150);
+  ctx.moveTo(150, 50);
+  ctx.lineTo(150, 250);
+  ctx.moveTo(50, 150);
+  ctx.lineTo(250, 150);
   ctx.lineWidth = 2
   ctx.strokeStyle = '#000000';
   ctx.fillStyle = '#000000'
   ctx.stroke();
 
-  canvas_arrow(ctx, 20, 150, 280, 150, 2)
+  canvas_arrow(ctx, 250, 150, 280, 150, 20)
+  canvas_arrow(ctx, 150, 250, 150, 280, 20)
+
 }
 
 initCanvas()
