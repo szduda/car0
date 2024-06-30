@@ -110,7 +110,7 @@ touchArea.addEventListener('touchstart', e => {
   lastTouch.y = y
 
   const [cX,cY] = getInteractionLocation(e)
-  drawAxes(cY,cX)
+  drawAxes(-cY,cX)
 
   console.log('touchstart at x,y:', x, y)
 }, {passive: false})
