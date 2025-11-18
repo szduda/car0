@@ -1,9 +1,12 @@
 from microdot.wsgi import Microdot, send_file, with_websocket
 from microdot.sse import with_sse
 from asyncio import sleep
+import _thread
+import base64
 
 from drive import Drive
 from vehicleMonitor import BatteryMonitor
+import camera
 
 closing = False
 
@@ -15,11 +18,32 @@ drive = Drive(12, 18, 13, 19)
 app = Microdot()
 battery_monitor = BatteryMonitor(i2c_bus=1)
 
+CAM_FPS = 30
+
 
 @app.route('/')
 async def index(request):
   print('GET /')
   return send_file('static/index.html')
+
+
+def get_frames():
+  while True:
+    frame = camera.get_frame()
+    return base64.b64encode(frame).decode('ascii')
+
+
+@app.route('/camera')
+@with_sse
+async def stream_video(request, sse):
+  global closing
+  while not closing:
+    def sse_stream():
+      frames = get_frames()
+      sse.send(frames)
+      sleep(1 / CAM_FPS)
+
+    _thread.start_new_thread(sse_stream, ())
 
 
 @app.route('/monitor')
