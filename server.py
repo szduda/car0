@@ -18,6 +18,7 @@ battery_monitor = BatteryMonitor(i2c_bus=1)
 
 @app.route('/')
 async def index(request):
+  print('GET /')
   return send_file('static/index.html')
 
 
@@ -126,6 +127,7 @@ if __name__ == '__main__':
   try:
     print("Starting the server...")
     app.run()
+    print('Server opened.')
   except KeyboardInterrupt:
     drive.stop()
     print("Server closed.")

@@ -1,9 +1,9 @@
 from time import sleep
+
 from DFRobot_INA219 import INA219
 
 
 class BatteryMonitor:
-
     ina219_reading_mA = 1000
     ext_meter_reading_mA = 1000
 
@@ -12,17 +12,25 @@ class BatteryMonitor:
 
     MIN_VOLT = 3.4 * ACU_18650_COUNT
     MAX_VOLT = 4.1 * ACU_18650_COUNT
-    MAX_mA = (1500.0 * 2) + 180       # HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
+    MAX_mA = (1500.0 * 2) + 180  # HR8833 motor driver limit is 1.5A per channel; RPI 0 2W draws ~180mA in this project
 
     avg_window = 5
-    hourses = [0]*avg_window
-    minuteses = [0]*avg_window
+    hourses = [0] * avg_window
+    minuteses = [0] * avg_window
     prev_time_index = avg_window - 1
+
+    n_fails = 0
+    MAX_N_FAILS = 3
 
     def __init__(self, i2c_bus):
         self.ina = INA219(i2c_bus, INA219.INA219_I2C_ADDRESS4)
 
         while not self.ina.begin():
+            self.n_fails += 1
+            if self.n_fails > self.MAX_N_FAILS:
+                print('Failed to initialize Battery Monitor. Falling back to INA219 stub.')
+                self.ina = INA219_Stub()
+                return
             sleep(2)
 
         self.ina.linear_cal(self.ina219_reading_mA, self.ext_meter_reading_mA)
@@ -48,6 +56,7 @@ class BatteryMonitor:
         self.minuteses.insert(i, m)
 
         def is_positive(num): return num > 0
+
         hs = list(filter(is_positive, self.hourses))
         ms = list(filter(is_positive, self.minuteses))
 
@@ -55,3 +64,14 @@ class BatteryMonitor:
         avg_m = sum(ms) / max(1, len(ms))
 
         return round(avg_h), round(avg_m / 10) * 10
+
+
+class INA219_Stub:
+    def begin(self):
+        return True
+
+    def get_bus_voltage_V(self):
+        return 0
+
+    def get_current_mA(self):
+        return 0
