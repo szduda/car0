@@ -14,16 +14,14 @@ async function start() {
         iceServers: [{ urls: ["stun:stun.l.google.com:19302"] }]
     });
 
-    pc.ontrack = (event) => {
-        document.getElementById("video").srcObject = event.streams[0];
+    pc.ontrack = (ev) => {
+        document.getElementById("video").srcObject = ev.streams[0];
     };
 
-    // Create offer
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
 
-    // Send offer to Raspberry Pi
-    const resp = await fetch("192.168.91.247:5001/offer", {
+    const resp = await fetch("192.168.0.17:5001/offer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ offer: pc.localDescription })
